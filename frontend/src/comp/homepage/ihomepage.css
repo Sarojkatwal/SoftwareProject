@@ -1,0 +1,121 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  grid-area: header;
+  height: 100px;
+  background-color: rgb(100, 78, 78);
+  color: red;
+}
+.header h2 {
+  text-align: center;
+  font-size: 50px;
+  font-weight: bolder;
+  position: relative;
+  top: -20px;
+}
+.header img {
+  margin: 5px 0 0 5px;
+  float: left;
+  width: 90px;
+  height: 90px;
+}
+.header .lout {
+  width: 70px;
+  height: 70px;
+  float: right;
+  margin: 15px 15px 0 0;
+}
+.grid-container {
+  display: grid;
+  grid-template-areas: "header header header header header header header header header header header header" "left left middle middle middle middle middle middle  middle middle  middle middle" "footer footer footer footer footer footer footer footer footer footer footer footer";
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.left,
+.middle {
+  background-color: turquoise;
+  overflow-y: auto;
+  height: 548px;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li a {
+  display: block;
+  color: white;
+  border: 1px solid white;
+  text-align: left;
+  padding: 34px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  width: 100%;
+}
+
+li a:hover {
+  background-color: green;
+}
+/* Style the left column */
+
+.left {
+  grid-area: left;
+}
+
+/* Style the middle column */
+
+.middle {
+  grid-area: middle;
+}
+
+/* Style the footer */
+
+.footer {
+  grid-area: footer;
+  padding: 10px;
+  text-align: center;
+  background-color: turquoise;
+}
+
+/* Responsive layout*/
+
+@media (max-width: 834px) {
+  .grid-container {
+    grid-template-areas: "header header header header header header" "left left left left left left" "middle middle middle middle middle middle" "right right right right right right" "footer footer footer footer footer footer";
+  }
+  .header h2 {
+    position: relative;
+    top: 0;
+    font-size: 30px;
+  }
+}
+@media (max-width: 390px) {
+  .header h2 {
+    position: relative;
+    top: 0;
+    font-size: 20px;
+  }
+}
+@media (max-width: 250px) {
+  .header {
+    height: 150px;
+  }
+  .header img {
+    clear: both;
+  }
+  .header h2 {
+    position: relative;
+    top: 0;
+    font-size: 20px;
+  }
+}
