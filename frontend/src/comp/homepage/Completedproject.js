@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Completedproject extends Component {
-    render() {
-        return (
-            <div>
-                Hello from Completedproject
-            </div>
-        );
-    }
+  render() {
+    return <div className="Options">Hello from Completedproject</div>;
+  }
 }
 
 export default Completedproject;
