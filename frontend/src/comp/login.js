@@ -4,6 +4,7 @@ import Img from "./person.png";
 import Img2 from "./pic2.png";
 import Bg from "./bg.jpg";
 import auth from "../auth";
+import axios from "axios";
 
 class Login extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      admin: true
+      admin: true,
+      matched: "notmatched"
     };
   }
   handleInputChange = event => {
@@ -30,18 +32,25 @@ class Login extends Component {
     });
   };
   handleSubmit = event => {
-    alert(
-      "You have submitted the input successfully: " +
-        this.state.username +
-        " " +
-        this.state.password +
-        " " +
-        this.state.admin
-    );
-    event.preventDefault();
-    !this.state.admin &&
-      auth.login(() => {
-        this.props.history.push("/ihomepage");
+    const obj = {
+      UserName: this.state.username,
+      Password: this.state.password,
+      Admin: this.state.admin ? 1 : 0
+    };
+    axios
+      .post("/checkuser.php", obj)
+      .then(res => {
+        this.setState({ matched: res.data });
+        if (!this.state.admin && this.state.matched === "matched") {
+          auth.login(() => {
+            this.props.history.push("/ihomepage");
+          });
+        } else {
+          alert("Insert correct username and password!!!");
+        }
+      })
+      .catch(err => {
+        console.error(err);
       });
   };
   render() {
@@ -62,6 +71,7 @@ class Login extends Component {
           <br />
           <br />
           <input
+            id="saroj"
             type="password"
             placeholder="Password"
             name="password"
@@ -70,23 +80,24 @@ class Login extends Component {
           />
           <br />
           <br />
-          Login as a &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Admin
-          <input
-            type="radio"
-            name="admin"
-            value="Admin"
-            checked={this.state.admin}
-            onChange={this.handleInputChange}
-          />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Intern
-          <input
-            type="radio"
-            name="admin"
-            value="Intern"
-            checked={!this.state.admin}
-            onChange={this.handleInputChange}
-          />
-          <br />
+          <div>
+            Login as Admin
+            <input
+              type="radio"
+              name="admin"
+              value="Admin"
+              checked={this.state.admin}
+              onChange={this.handleInputChange}
+            />
+            Intern
+            <input
+              type="radio"
+              name="admin"
+              value="Intern"
+              checked={!this.state.admin}
+              onChange={this.handleInputChange}
+            />
+          </div>
           <br />
           <input type="submit" value="Submit" onClick={this.handleSubmit} />
         </div>

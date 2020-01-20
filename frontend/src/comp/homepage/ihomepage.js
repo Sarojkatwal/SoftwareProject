@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./ihomepage.css";
 import Logo from "./logo.png";
 import { FaUserCircle } from "react-icons/fa";
-import { Route, NavLink, Switch, Redirect } from "react-router-dom";
+import { Route, NavLink, Switch } from "react-router-dom";
 import Home from "./Home.js";
 import Chatbox from "./Chatbox.js";
 import Pdetail from "./Pdetail.js";
@@ -13,9 +13,6 @@ import Otherlinks from "./Otherlinks.js";
 import auth from "../../auth";
 
 class Ihomepage extends Component {
-  constructor(props) {
-    super(props);
-  }
   logOut = () => {
     auth.logout(() => {
       this.props.history.push("/");
