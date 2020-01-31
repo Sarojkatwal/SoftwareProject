@@ -8,9 +8,16 @@ if($result=mysqli_query($con,$sql))
     $request=json_decode($postdata);
     while($row=mysqli_fetch_assoc($result))
     {
-        if($row['Admin']==$request->Admin && $row['UserName']==$request->UserName && $row['Password']==$request->Password)
+        if($row['UserName']==$request->UserName && $row['Password']==$request->Password)
         {
-            $data="matched";
+            if($row['Admin'])
+            {
+                $data="matchedasadmin";
+            }
+            else
+            {
+                $data="matchedasintern";
+            }
             break;
         }
     }

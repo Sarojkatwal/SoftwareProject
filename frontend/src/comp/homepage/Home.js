@@ -3,6 +3,10 @@ import Bg from "./bg.jpg";
 import "./ihomepage.css";
 
 class Home extends Component {
+  constructor() {
+    super();
+    console.log("Hello from  constructor Home.js");
+  }
   render() {
     return (
       <div className="Options">

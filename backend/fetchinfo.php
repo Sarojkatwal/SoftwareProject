@@ -1,7 +1,8 @@
 <?php
 require 'connect.php';
+$postdata=file_get_contents("php://input");
 $intern=[];
-$sql="SELECT * FROM  interndetail";
+$sql="SELECT * FROM  interndetail WHERE UserName='{$postdata}'";
 if($result=mysqli_query($con,$sql))
 {
     $cr=0;
@@ -10,6 +11,7 @@ if($result=mysqli_query($con,$sql))
         $intern[$cr]['Id']=$row['Id'];
         $intern[$cr]['Name']=$row['Name'];
         $intern[$cr]['ProjectName']=$row['ProjectName'];
+        $intern[$cr]['AssignedDate']=$row['AssignedDate'];
         $intern[$cr]['EndDate']=$row['EndDate'];
         $intern[$cr]['Address']=$row['Address'];
         $cr++;

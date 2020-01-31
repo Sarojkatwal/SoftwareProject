@@ -1,130 +1,67 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.header {
-  grid-area: header;
-  height: 100px;
-  background-color: rgb(100, 78, 78);
-  color: red;
-}
-.header h2 {
-  text-align: center;
-  font-size: 50px;
-  font-weight: bolder;
-  position: relative;
-  top: -20px;
-}
-.header img {
-  margin: 5px 0 0 5px;
-  float: left;
-  width: 90px;
-  height: 90px;
-}
-.lout {
-  position: relative;
-  float: right;
-  z-index: 999;
-  margin: 15px 15px 0 0;
-  background-color: transparent;
-  border: transparent;
-}
-.grid-container {
-  display: grid;
-  grid-template-areas: "header header header header header header header header header header header header" "left left middle middle middle middle middle middle  middle middle  middle middle" "footer footer footer footer footer footer footer footer footer footer footer footer";
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-}
-
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-
-li a {
-  display: block;
-  color: white;
-  border: 1px solid white;
-  text-align: left;
-  padding: 24px 5px 27px 10px;
-  text-decoration: none;
-  font-size: 20px;
-}
-
-li a:hover {
-  background-color: green;
-}
-/* Style the left column */
-
-.left {
-  grid-area: left;
-  background-color: turquoise;
-  overflow-y: auto;
-  height: 468px;
-  border: 6px solid wheat;
-}
-
-/* Style the middle column */
-
-.middle {
-  grid-area: middle;
-  background-color: turquoise;
-  overflow-y: auto;
-  height: 468px;
-  border: 5px solid greenyellow;
-  position: relative;
-}
-
-/* Style the footer */
-
-.footer {
-  grid-area: footer;
-  padding: 0 px;
-  text-align: center;
-  background-color: grey;
-}
-
-.Options {
-  width: 100%;
+.showlogout {
   position: absolute;
+  top: 40%;
+  left: 40%;
   font-size: 20px;
-  font-style: italic;
-  list-style-type: none;
-  text-align: justify;
+  text-align: center;
+  width: 40%;
+  background-color: darkgray;
+  padding: 20px;
+  border-radius: 10px;
 }
-/* Responsive layout*/
-
-@media (max-width: 834px) {
-  .grid-container {
-    grid-template-areas: "header header header header header header" "left left left left left left" "middle middle middle middle middle middle" "right right right right right right" "footer footer footer footer footer footer";
-  }
-  .header h2 {
-    position: relative;
-    top: 0;
-    font-size: 30px;
-  }
+.hidelogout {
+  display: none;
 }
-@media (max-width: 390px) {
-  .header h2 {
-    position: relative;
-    top: 0;
-    font-size: 20px;
-  }
+.SSS {
+  opacity: 0.2;
 }
-@media (max-width: 310px) {
-  .header img {
+.btn-light {
+  background-color: transparent;
+  border: none;
+}
+.col-sm-3 {
+  padding-left: 0px;
+}
+.col-sm-3,
+.col-sm-9 {
+  margin-top: 5px;
+}
+.list-group-item {
+  font-size: 20px;
+  padding: 3px;
+  padding-left: 10px;
+  background-color: rgba(162, 161, 187, 0.055);
+}
+.list-group-item:hover {
+  background-color: rgb(121, 121, 129);
+  color: greenyellow;
+}
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+.btn-outline-success {
+  display: none;
+}
+@media screen and (max-width: 660px) {
+  .navbar-brand,
+  #logoutbutton {
     display: none;
   }
-  .header h2 {
-    position: relative;
-    top: 0;
-    font-size: 20px;
+  h1.font-weight-bolder {
+    text-align: center;
+  }
+}
+@media screen and (min-width: 576px) {
+  #demo {
+    display: block;
+  }
+  .btn-outline-success {
+    display: none;
+  }
+}
+@media screen and (max-width: 575px) {
+  .btn-outline-success {
+    display: block;
   }
 }
