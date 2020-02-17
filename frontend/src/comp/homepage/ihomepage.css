@@ -43,6 +43,44 @@ a:hover {
 .btn-outline-success {
   display: none;
 }
+
+/*add.js*/
+ul.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+ul.navbar li {
+  float: left;
+}
+
+ul.navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 26px;
+  text-decoration: none;
+}
+
+ul.navbar li a:hover:not(.active) {
+  background-color: brown;
+}
+
+ul.navbar .active {
+  background-color: #4caf50;
+}
+ul.navbar li a:not(.active) {
+  background-color: gray;
+}
+.er {
+  border: 1px solid black;
+  margin-top: 3px;
+  padding: 10px 30px;
+}
+
 @media screen and (max-width: 660px) {
   .navbar-brand,
   #logoutbutton {

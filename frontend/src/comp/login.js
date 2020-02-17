@@ -20,8 +20,20 @@ class Login extends Component {
       Width: window.innerWidth,
       loader: false
     };
-    console.log("Hello from constructor Login.js ");
   }
+  componentDidMount() {
+    this.lstner = setInterval(
+      () => window.addEventListener("resize", this.handleResize),
+      500
+    );
+  }
+  handleResize = () => {
+    this.setState({
+      ...this.state,
+      Height: window.innerHeight,
+      Width: window.innerWidth
+    });
+  };
   handleInputChange = event => {
     const target = event.target;
     let value = target.value;
@@ -40,9 +52,13 @@ class Login extends Component {
       .post("/checkuser.php", obj)
       .then(res => {
         this.setState({ ...this.state, matched: res.data });
-        if (!this.state.admin && this.state.matched === "matchedasintern") {
+        if (
+          (!this.state.admin && this.state.matched === "matchedasintern") ||
+          "matchedasadmin"
+        ) {
           sessionStorage.setItem("username", this.state.username);
           sessionStorage.setItem("loggedin", "true");
+          sessionStorage.setItem("type", this.state.matched);
           this.setState({ ...this.state, loader: true });
           setTimeout(() => {
             this.setState({
@@ -50,7 +66,7 @@ class Login extends Component {
               loader: false
             });
             this.props.history.push("/ihomepage");
-          }, 1000);
+          }, 3000);
         } else {
           alert("Insert correct username and password!!!");
         }
@@ -59,6 +75,9 @@ class Login extends Component {
         console.error(err);
       });
   };
+  componentWillUnmount() {
+    clearInterval(this.lstner);
+  }
   render() {
     return (
       <React.Fragment>

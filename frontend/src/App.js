@@ -2,7 +2,7 @@ import React from "react";
 import Login from "./comp/login.js";
 import Ihomepage from "./comp/homepage/ihomepage.js";
 import { Route, Switch } from "react-router-dom";
-import NotFound from "./comp/homepage/Notfound.js";
+import NotFound from "./comp/homepage//components/Notfound.js";
 import { ProtectedRoute } from "./protected.route";
 
 class App extends React.Component {

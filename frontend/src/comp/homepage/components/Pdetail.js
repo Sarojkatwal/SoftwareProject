@@ -6,7 +6,6 @@ class Pdetail extends Component {
   constructor(props) {
     super(props);
     this.state = { intern: [], loading: true };
-    //console.log(auth.getUsername(), " ", auth.isAuthenticated());
   }
   componentDidMount() {
     const username = sessionStorage.getItem("username");
@@ -19,7 +18,7 @@ class Pdetail extends Component {
         .catch(err => {
           console.error(err);
         });
-    }, 3000);
+    }, 100);
   }
   userList() {
     return this.state.intern.map((x, i) => {

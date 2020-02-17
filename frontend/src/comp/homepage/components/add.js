@@ -1,0 +1,38 @@
+import React, { Component } from "react";
+import { Route, NavLink, Switch } from "react-router-dom";
+import Optionscreator from "./optionscreator.js";
+import Addadmin from "./addadmin.js";
+import Addintern from "./addintern.js";
+import Addproject from "./addproject.js";
+
+class Add extends Component {
+  render() {
+    return (
+      <>
+        <ul className="navbar">
+          <Optionscreator
+            classname=""
+            linkto="/ihomepage/add/"
+            field="Intern"
+          />
+          <Optionscreator
+            classname=""
+            linkto="/ihomepage/add/admin"
+            field="Admin"
+          />
+          <Optionscreator
+            classname=""
+            linkto="/ihomepage/add/project"
+            field="Project"
+          />
+        </ul>
+        <Switch>
+          <Route exact path="/ihomepage/add/" component={Addintern} />
+          <Route exact path="/ihomepage/add/admin" component={Addadmin} />
+          <Route exact path="/ihomepage/add/project" component={Addproject} />
+        </Switch>
+      </>
+    );
+  }
+}
+export default Add;

@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import "./ihomepage.css";
-import Logo from "./logo.png";
-import { FaUserCircle } from "react-icons/fa";
 import { Route, NavLink, Switch } from "react-router-dom";
-import Home from "./Home.js";
-import Chatbox from "./Chatbox.js";
-import Pdetail from "./Pdetail.js";
-import Notfound from "./Notfound.js";
-import Submitfile from "./Submitfile.js";
-import Completedproject from "./Completedproject.js";
-import Otherlinks from "./Otherlinks.js";
+import Home from "./components/Home.js";
+import Chatbox from "./components/Chatbox.js";
+import Addinterns from "./components/add.js";
+import Pdetail from "./components/Pdetail.js";
+import Notfound from "./components/Notfound.js";
+import Submitfile from "./components/Submitfile.js";
+import Completedproject from "./components/Completedproject.js";
+import Otherlinks from "./components/Otherlinks.js";
+import Optionscreator from "./components/optionscreator.js";
+import Logo from "../pictures/logo.png";
+import { FaUserCircle } from "react-icons/fa";
+import Assignproject from "./components/assignproject";
 
 class Ihomepage extends Component {
   constructor() {
@@ -32,7 +35,6 @@ class Ihomepage extends Component {
       }, 5000);
     }
   };
-
   render() {
     return (
       <React.Fragment>
@@ -68,7 +70,6 @@ class Ihomepage extends Component {
               </button>
             </div>
           </div>
-
           <div className="row">
             <button
               className="btn btn-outline-success"
@@ -80,80 +81,73 @@ class Ihomepage extends Component {
 
             <div className="col-sm-3 collapse show" id="demo">
               <ul className="list-group">
-                <li className="list-group-item">
-                  <h1>
-                    <i className="fa fa-home" aria-hidden="true"></i>
-                  </h1>
-                  <NavLink
-                    to="/ihomepage/"
-                    exact
-                    activeStyle={{ color: "red" }}
-                  >
-                    Home
-                  </NavLink>
-                </li>
-                <li className="list-group-item">
-                  <h1>
-                    <i className="fa fa-info-circle" aria-hidden="true"></i>
-                  </h1>
-                  <NavLink
-                    to="/ihomepage/pdetail"
-                    exact
-                    activeStyle={{ color: "red" }}
-                  >
-                    Project Details
-                  </NavLink>
-                </li>
-
-                <li className="list-group-item">
-                  <h1>
-                    <i className="fa fa-comment-o" aria-hidden="true"></i>
-                  </h1>
-                  <NavLink
-                    to="/ihomepage/chatbox"
-                    exact
-                    activeStyle={{ color: "red" }}
-                  >
-                    Chatbox
-                  </NavLink>
-                </li>
-
-                <li className="list-group-item">
-                  <h1>
-                    <i className="fa fa-file-code-o" aria-hidden="true"></i>
-                  </h1>
-                  <NavLink
-                    to="/ihomepage/submitfile"
-                    exact
-                    activeStyle={{ color: "red" }}
-                  >
-                    SubmitFile
-                  </NavLink>
-                </li>
-                <li className="list-group-item">
-                  <h1>
-                    <i className="fa fa-folder" aria-hidden="true"></i>
-                  </h1>
-                  <NavLink
-                    to="/ihomepage/completedproject"
-                    exact
-                    activeStyle={{ color: "red" }}
-                  >
-                    Completed Project
-                  </NavLink>
-                </li>
-                <li className="list-group-item">
-                  <h1>
-                    <i className="fa fa-link" aria-hidden="true"></i>
-                  </h1>
-                  <NavLink
-                    to="/ihomepage/otherlinks"
-                    exact
-                    activeStyle={{ color: "red" }}
-                  >
-                    Other Links
-                  </NavLink>
-                </li>
+                {sessionStorage.getItem("type") === "matchedasintern" ? (
+                  <>
+                    <Optionscreator
+                      classname="fa fa-home"
+                      linkto="/ihomepage"
+                      field="Home"
+                    />
+                    <Optionscreator
+                      classname="fa fa-info-circle"
+                      linkto="/ihomepage/pdetail"
+                      field="ProjectDetail"
+                    />
+                    <Optionscreator
+                      classname="fa fa-comment-o"
+                      linkto="/ihomepage/chatbox"
+                      field="Chatbox"
+                    />
+                    <Optionscreator
+                      classname="fa fa-file-code-o"
+                      linkto="/ihomepage/submitfile"
+                      field="Submmit File"
+                    />
+                    <Optionscreator
+                      classname="fa fa-folder"
+                      linkto="/ihomepage/completedproject"
+                      field="CompletedProject"
+                    />
+                    <Optionscreator
+                      classname="fa fa-link"
+                      linkto="/ihomepage/otherlinks"
+                      field="Other Links"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Optionscreator
+                      classname="fa fa-user"
+                      linkto="/ihomepage/interndetail"
+                      field="All Interns"
+                    />
+                    <Optionscreator
+                      classname="fa fa-plus-circle"
+                      linkto="/ihomepage/add"
+                      field="Add Items"
+                    />
+                    <Optionscreator
+                      classname="fa fa-list"
+                      linkto="/ihomepage/projectlist"
+                      field="Project List"
+                    />
+                    <Optionscreator
+                      classname="fa fa-th-list"
+                      linkto="/ihomepage/cmprojectlist"
+                      field="Completed Project List"
+                    />
+                    <Optionscreator
+                      classname="fa fa-list-alt"
+                      linkto="/ihomepage/astointern"
+                      field="Assign Project"
+                    />
+                    <Optionscreator
+                      classname="fa fa-comments"
+                      linkto="/ihomepage/message"
+                      field="message"
+                    />
+                  </>
+                )}
               </ul>
             </div>
             <div className="col-sm-9" style={{ overflowY: "auto" }}>
@@ -175,6 +169,11 @@ class Ihomepage extends Component {
                     <Route exact path="/ihomepage/" component={Home} />
                     <Route path="/ihomepage/pdetail" component={Pdetail} />
                     <Route path="/ihomepage/chatbox" component={Chatbox} />
+                    <Route path="/ihomepage/add" component={Addinterns} />
+                    <Route
+                      path="/ihomepage/astointern"
+                      component={Assignproject}
+                    />
                     <Route
                       path="/ihomepage/submitfile"
                       component={Submitfile}

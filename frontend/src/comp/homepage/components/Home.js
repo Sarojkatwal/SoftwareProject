@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import Bg from "./bg.jpg";
-import "./ihomepage.css";
+import Bg from "../../pictures/bg.jpg";
 
 class Home extends Component {
-  constructor() {
-    super();
-    console.log("Hello from  constructor Home.js");
-  }
   render() {
     return (
       <div className="Options">

@@ -2,7 +2,7 @@
 require 'connect.php';
 $postdata=file_get_contents("php://input");
 $intern=[];
-$sql="SELECT * FROM  interndetail WHERE UserName='{$postdata}'";
+$sql="SELECT * FROM  interndetail WHERE Username='{$postdata}'";
 if($result=mysqli_query($con,$sql))
 {
     $cr=0;
