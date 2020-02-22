@@ -11,7 +11,7 @@ import Completedproject from "./components/Completedproject.js";
 import Projectlist from "./components/projectlist.js";
 import Otherlinks from "./components/Otherlinks.js";
 import Optionscreator from "./components/optionscreator.js";
-import Logo from "./pictures/logo.png";
+import Logo from "../pictures/logo.png";
 import { FaUserCircle } from "react-icons/fa";
 import Assignproject from "./components/assignproject";
 import Showinterns from "./components/showinterns";

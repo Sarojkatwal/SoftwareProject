@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Bg from "../pictures/bg.jpg";
+import Bg from "../../pictures/bg.jpg";
 
 class Home extends Component {
   render() {
