@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Route, NavLink, Switch } from "react-router-dom";
 import Optionscreator from "./optionscreator.js";
-import Addadmin from "./addadmin.js";
-import Addintern from "./addintern.js";
-import Addproject from "./addproject.js";
+import Addadmin from "./Foradditem/addadmin.js";
+import Addintern from "./Foradditem/addintern.js";
+import Addproject from "./Foradditem/addproject.js";
 
 class Add extends Component {
   render() {

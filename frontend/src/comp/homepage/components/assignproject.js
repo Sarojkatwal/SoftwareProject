@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Redirect } from "react-router";
 
 class Assignproject extends Component {
   constructor(props) {
@@ -9,18 +10,28 @@ class Assignproject extends Component {
       username: "",
       timelimit: 0,
       allusers: [],
-      allprojects: []
+      allprojects: [],
+      collectusers: [],
+      redirect: false
     };
   }
   componentDidMount() {
+    this.loaddata();
+  }
+  loaddata() {
     axios
       .get("/dataforassign.php")
       .then(res => {
-        this.setState({
-          ...this.state,
-          allusers: res.data.Username,
-          allprojects: res.data.Projectname
-        });
+        if (
+          res.data.Username !== undefined &&
+          res.data.Projectname !== undefined
+        ) {
+          this.setState({
+            ...this.state,
+            allusers: res.data.Username,
+            allprojects: res.data.Projectname
+          });
+        }
       })
       .catch(err => {
         alert(err);
@@ -34,12 +45,20 @@ class Assignproject extends Component {
       ...this.state,
       [name]: value
     });
+    if (
+      name === "username" &&
+      this.state.collectusers.includes(value) === false
+    ) {
+      this.setState({
+        ...this.state,
+        collectusers: [...this.state.collectusers, value]
+      });
+    }
   };
   handleSubmit = () => {
-    console.log(this.state);
     var myobj = {
       projectname: this.state.projectname,
-      username: this.state.username,
+      username: this.state.collectusers.toString(),
       assigneddate: new Date(),
       enddate: new Date(
         new Date().getTime() + 86400000 * 30 * this.state.timelimit
@@ -49,6 +68,10 @@ class Assignproject extends Component {
       .post("/assignproject.php", myobj)
       .then(res => {
         alert(res.data);
+        this.setState({
+          ...this.state,
+          redirect: true
+        });
       })
       .catch(err => {
         alert(err);
@@ -62,7 +85,7 @@ class Assignproject extends Component {
     if (this.state.projectname === "") {
       pname.focus();
       x = false;
-    } else if (this.state.username === "") {
+    } else if (this.state.collectusers.toString() === "") {
       uname.focus();
       x = false;
     } else {
@@ -74,6 +97,19 @@ class Assignproject extends Component {
   };
 
   render() {
+    const re = this.state.redirect;
+    if (re === true) {
+      this.setState({
+        ...this.state,
+        projectname: "",
+        username: "",
+        timelimit: 0,
+        collectusers: [],
+        redirect: false
+      });
+      this.loaddata();
+      return <Redirect to="/ihomepage/astointern" />;
+    }
     const xx = this.state.allusers.map((x, i) => {
       return (
         <option key={i} value={x}>
@@ -88,6 +124,13 @@ class Assignproject extends Component {
         </option>
       );
     });
+    const zz = this.state.collectusers.map((z, i) => {
+      return (
+        <li key={i} value={z}>
+          {z}
+        </li>
+      );
+    });
     return (
       <div>
         <form name="RegForm">
@@ -100,7 +143,7 @@ class Assignproject extends Component {
               onChange={this.handleInputChange}
             >
               <option value="-----------" selected disabled>
-                ProjectName
+                Projectname
               </option>
               {yy}
             </select>
@@ -119,7 +162,7 @@ class Assignproject extends Component {
               {xx}
             </select>
             <br />
-            <br />
+            <ol>{zz}</ol>
             <div className="form-group">
               <label htmlFor="timelimit">Time to complete(in Months):</label>
               <input
@@ -128,13 +171,12 @@ class Assignproject extends Component {
                 name="timelimit"
                 className="form-control"
                 placeholder="0"
+                min="0"
                 required
                 value={this.state.timelimit}
                 onChange={this.handleInputChange}
               />
             </div>
-            <br />
-            <br />
             <input
               type="submit"
               value="AssignProject"

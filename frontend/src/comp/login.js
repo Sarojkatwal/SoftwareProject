@@ -53,8 +53,8 @@ class Login extends Component {
       .then(res => {
         this.setState({ ...this.state, matched: res.data });
         if (
-          (!this.state.admin && this.state.matched === "matchedasintern") ||
-          "matchedasadmin"
+          this.state.matched === "matchedasintern" ||
+          this.state.matched === "matchedasadmin"
         ) {
           sessionStorage.setItem("username", this.state.username);
           sessionStorage.setItem("loggedin", "true");
@@ -141,6 +141,7 @@ class Login extends Component {
             <span className="carousel-control-next-icon"></span>
           </a>
         </div>
+
         <div className="container">
           <div id="frontpage">
             <img

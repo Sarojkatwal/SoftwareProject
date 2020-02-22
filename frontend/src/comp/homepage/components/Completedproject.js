@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import Projectlist from "./projectlist.js";
 
 class Completedproject extends Component {
   render() {
-    return <div className="Options">Hello from Completedproject</div>;
+    const aa = "SELECT * FROM  projectdetail WHERE Status IN('Completed')";
+    return <Projectlist sqls={aa} />;
   }
 }
 

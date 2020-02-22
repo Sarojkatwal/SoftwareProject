@@ -19,7 +19,7 @@ class Addadmin extends Component {
   };
   handleSubmit = () => {
     axios
-      .post("/addadmin.php", this.state)
+      .post("/Foradditem/addadmin.php", this.state)
       .then(res => {
         alert(res.data);
         this.setState({

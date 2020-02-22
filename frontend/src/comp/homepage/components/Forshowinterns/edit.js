@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-class Addintern extends Component {
+class Edit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      fname: "",
-      lname: "",
-      address: "",
-      experience: "",
-      qualification: "",
-      nationality: "",
-      religion: "",
-      gender: "Male"
+      username: this.props.dat.Username,
+      fname: this.props.dat.Firstname,
+      lname: this.props.dat.Lastname,
+      address: this.props.dat.Address,
+      experience: this.props.dat.Experience,
+      qualification: this.props.dat.Qualification,
+      nationality: this.props.dat.Nationality,
+      religion: this.props.dat.Religion,
+      gender: this.props.dat.Gender
     };
   }
   handleInputChange = event => {
@@ -26,11 +25,12 @@ class Addintern extends Component {
     });
   };
   handleSubmit = () => {
-    console.log(this.state);
     axios
-      .post("/addintern.php", this.state)
+      .post("/edit.php", this.state)
       .then(res => {
         window.alert(res.data);
+        console.log(res.data);
+        this.props.action();
       })
       .catch(err => {
         window.alert(err);
@@ -40,8 +40,6 @@ class Addintern extends Component {
     event.preventDefault();
     var lname = document.forms["RegForm"]["lname"];
     var fname = document.forms["RegForm"]["fname"];
-    var username = document.forms["RegForm"]["username"];
-    var password = document.forms["RegForm"]["password"];
     var nationality = document.forms["RegForm"]["nationality"];
     var religion = document.forms["RegForm"]["religion"];
     var address = document.forms["RegForm"]["address"];
@@ -80,14 +78,6 @@ class Addintern extends Component {
     } else if (gender.value === "") {
       // window.alert("Please enter your gender.");
       gender.focus();
-      x = false;
-    } else if (username.value === "") {
-      //window.alert("Please enter a valid username.");
-      username.focus();
-      x = false;
-    } else if (password.value === "") {
-      //window.alert("Please enter your password.");
-      password.focus();
       x = false;
     } else {
       x = true;
@@ -148,6 +138,7 @@ class Addintern extends Component {
                 className="custom-select"
                 required
                 onChange={this.handleInputChange}
+                value={this.state.experience}
               >
                 <option value="-----------" selected disabled>
                   Experience
@@ -165,6 +156,7 @@ class Addintern extends Component {
                 className="custom-select"
                 required
                 onChange={this.handleInputChange}
+                value={this.state.qualification}
               >
                 <option value="-----------" selected disabled>
                   Qualification
@@ -254,52 +246,6 @@ class Addintern extends Component {
               </div>
             </div>
           </div>
-          <div className="er">
-            <legend>Username and password</legend>
-            <div className="form-group">
-              <label htmlFor="username">Username:</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                className="form-control"
-                placeholder="Username"
-                required
-                value={this.state.username}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Password"
-                name="password"
-                required
-                value={this.state.password}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="custom-control custom-checkbox mb-3">
-              <input
-                type="checkbox"
-                id="showpassword"
-                name="showpassword"
-                className="custom-control-input"
-                onChange={event => {
-                  var x = document.getElementById("password");
-                  event.target.checked
-                    ? (x.type = "text")
-                    : (x.type = "password");
-                }}
-              />
-              <label htmlFor="showpassword" className="custom-control-label">
-                Show Password:
-              </label>
-            </div>
-          </div>
           <br />
           <button
             type="submit"
@@ -308,10 +254,18 @@ class Addintern extends Component {
           >
             Submit
           </button>
+          <button
+            style={{ float: "right" }}
+            type="submit"
+            className="btn btn-danger"
+            onClick={this.props.action}
+          >
+            Cancel
+          </button>
         </form>
       </div>
     );
   }
 }
 
-export default Addintern;
+export default Edit;

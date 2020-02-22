@@ -2,17 +2,20 @@ import React, { Component } from "react";
 import "./ihomepage.css";
 import { Route, NavLink, Switch } from "react-router-dom";
 import Home from "./components/Home.js";
-import Chatbox from "./components/Chatbox.js";
+import Chatbox from "./componentsforintern/Chatbox.js";
 import Addinterns from "./components/add.js";
-import Pdetail from "./components/Pdetail.js";
+import Pdetail from "./componentsforintern/Pdetail.js";
 import Notfound from "./components/Notfound.js";
-import Submitfile from "./components/Submitfile.js";
+import Submitfile from "./componentsforintern/Submitfile.js";
 import Completedproject from "./components/Completedproject.js";
+import Projectlist from "./components/projectlist.js";
 import Otherlinks from "./components/Otherlinks.js";
 import Optionscreator from "./components/optionscreator.js";
-import Logo from "../pictures/logo.png";
+import Logo from "./pictures/logo.png";
 import { FaUserCircle } from "react-icons/fa";
 import Assignproject from "./components/assignproject";
+import Showinterns from "./components/showinterns";
+import Message from "./components/message.js";
 
 class Ihomepage extends Component {
   constructor() {
@@ -91,7 +94,7 @@ class Ihomepage extends Component {
                     <Optionscreator
                       classname="fa fa-info-circle"
                       linkto="/ihomepage/pdetail"
-                      field="ProjectDetail"
+                      field="Personal Info."
                     />
                     <Optionscreator
                       classname="fa fa-comment-o"
@@ -118,7 +121,7 @@ class Ihomepage extends Component {
                   <>
                     <Optionscreator
                       classname="fa fa-user"
-                      linkto="/ihomepage/interndetail"
+                      linkto="/ihomepage/internsdetail"
                       field="All Interns"
                     />
                     <Optionscreator
@@ -171,17 +174,30 @@ class Ihomepage extends Component {
                     <Route path="/ihomepage/chatbox" component={Chatbox} />
                     <Route path="/ihomepage/add" component={Addinterns} />
                     <Route
+                      path="/ihomepage/internsdetail"
+                      component={Showinterns}
+                    />
+                    <Route
+                      path="/ihomepage/projectlist"
+                      component={Projectlist}
+                    />
+                    <Route
+                      path="/ihomepage/cmprojectlist"
+                      component={Completedproject}
+                    />
+                    <Route
                       path="/ihomepage/astointern"
                       component={Assignproject}
                     />
+                    <Route path="/ihomepage/message" component={Message} />
                     <Route
                       path="/ihomepage/submitfile"
                       component={Submitfile}
                     />
-                    <Route
+                    {/* <Route
                       path="/ihomepage/completedproject"
                       component={Completedproject}
-                    />
+                   />*/}
                     <Route
                       path="/ihomepage/otherlinks"
                       component={Otherlinks}

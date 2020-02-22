@@ -19,7 +19,7 @@ class Addproject extends Component {
   };
   handleSubmit = () => {
     axios
-      .post("/addproject.php", this.state)
+      .post("/Foradditem/addproject.php", this.state)
       .then(res => {
         alert(res.data);
         this.setState({

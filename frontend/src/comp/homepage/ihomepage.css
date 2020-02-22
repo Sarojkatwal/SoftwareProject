@@ -80,7 +80,41 @@ ul.navbar li a:not(.active) {
   margin-top: 3px;
   padding: 10px 30px;
 }
+.homemessage {
+  min-height: 70px;
+}
+.awaymessage {
+  min-height: 70px;
+}
+.homemessage small {
+  width: 50%;
+  padding: 4px 1%;
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.homemessage div.a2 {
+  background-color: burlywood;
+  color: red;
+  width: 50%;
+  padding: 4px 1%;
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.awaymessage div.a2 {
+  color: black;
+  background-color: blueviolet;
+  padding: 6px 1%;
+  width: 40%;
+  border-radius: 10px;
+}
 
+button.btn {
+  padding: 5px 20px;
+}
 @media screen and (max-width: 660px) {
   .navbar-brand,
   #logoutbutton {
