@@ -11,7 +11,11 @@ class App extends React.Component {
       <React.Fragment>
         <Switch>
           <Route exact path="/" component={Login} />
-          <ProtectedRoute path="/ihomepage" component={Ihomepage} />
+          <ProtectedRoute
+            path="/ihomepage"
+            obj={{ key: "loggedin", value: "true" }}
+            component={Ihomepage}
+          />
           <Route component={NotFound} />>
         </Switch>
       </React.Fragment>

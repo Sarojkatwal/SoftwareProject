@@ -7,7 +7,8 @@ $Username=$request->username;
 $Assigneddate=$request->assigneddate;
 $Enddate=$request->enddate;
 
-$sql="UPDATE `projectdetail` SET `Assignedto` = '{$Username}', `Assigneddate` = '{$Assigneddate}', `Enddate` = '{$Enddate}', `Status` = 'Assigned' WHERE `projectdetail`.`Projectname` = '{$Projectname}';";
+$sql="UPDATE `projectdetail` SET `Assignedto` = '{$Username}', `Assigneddate` = '{$Assigneddate}',
+ `Enddate` = '{$Enddate}', `Status` = 'Assigned' WHERE `projectdetail`.`Projectname` = '{$Projectname}';";
 if(mysqli_query($con,$sql))
 {
     echo("Assigned Successfully");

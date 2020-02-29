@@ -16,6 +16,9 @@ import { FaUserCircle } from "react-icons/fa";
 import Assignproject from "./components/assignproject";
 import Showinterns from "./components/showinterns";
 import Message from "./components/message.js";
+import { ProtectedRoute } from "../../protected.route.js";
+import Cproject from "./componentsforintern/cproject.js";
+import IMAGE from "../pictures/i6.jpg";
 
 class Ihomepage extends Component {
   constructor() {
@@ -47,9 +50,15 @@ class Ihomepage extends Component {
         >
           <div
             className="row"
-            style={{ backgroundColor: "purple", opacity: "1.0" }}
+            style={{
+              backgroundColor: "purple",
+              opacity: "1.0",
+              position: "sticky",
+              zIndex: "1",
+              top: "0"
+            }}
           >
-            <div className="col-md p-1 pl-3">
+            <div className="col-md p-1 pl-3 ">
               <a className="navbar-brand" href="#">
                 <img src={Logo} alt="logo" style={{ width: "50px" }} />
               </a>
@@ -59,7 +68,7 @@ class Ihomepage extends Component {
               <button
                 id="logoutbutton"
                 className="btn btn-light float-right"
-                title="Logout"
+                title={"Logout as\n" + sessionStorage.getItem("username")}
                 data-toggle="popover"
                 data-trigger="hover"
                 onClick={this.logOut}
@@ -109,7 +118,7 @@ class Ihomepage extends Component {
                     <Optionscreator
                       classname="fa fa-folder"
                       linkto="/ihomepage/completedproject"
-                      field="CompletedProject"
+                      field="Completed  Project"
                     />
                     <Optionscreator
                       classname="fa fa-link"
@@ -153,7 +162,7 @@ class Ihomepage extends Component {
                 )}
               </ul>
             </div>
-            <div className="col-sm-9" style={{ overflowY: "auto" }}>
+            <div className="col-sm-9">
               <div
                 className="row"
                 style={{
@@ -170,45 +179,86 @@ class Ihomepage extends Component {
                 >
                   <Switch>
                     <Route exact path="/ihomepage/" component={Home} />
-                    <Route path="/ihomepage/pdetail" component={Pdetail} />
-                    <Route path="/ihomepage/chatbox" component={Chatbox} />
-                    <Route path="/ihomepage/add" component={Addinterns} />
-                    <Route
-                      path="/ihomepage/internsdetail"
-                      component={Showinterns}
+                    <ProtectedRoute
+                      path="/ihomepage/pdetail"
+                      obj={{ key: "type", value: "matchedasintern" }}
+                      component={Pdetail}
                     />
-                    <Route
-                      path="/ihomepage/projectlist"
-                      component={Projectlist}
+                    <ProtectedRoute
+                      path="/ihomepage/otherlinks"
+                      obj={{ key: "type", value: "matchedasintern" }}
+                      component={Otherlinks}
                     />
-                    <Route
-                      path="/ihomepage/cmprojectlist"
-                      component={Completedproject}
+                    <ProtectedRoute
+                      path="/ihomepage/completedproject"
+                      obj={{ key: "type", value: "matchedasintern" }}
+                      component={Cproject}
                     />
-                    <Route
-                      path="/ihomepage/astointern"
-                      component={Assignproject}
-                    />
-                    <Route path="/ihomepage/message" component={Message} />
-                    <Route
+                    <ProtectedRoute
                       path="/ihomepage/submitfile"
+                      obj={{ key: "type", value: "matchedasintern" }}
                       component={Submitfile}
                     />
-                    {/* <Route
+                    <ProtectedRoute
+                      path="/ihomepage/chatbox"
+                      obj={{ key: "type", value: "matchedasintern" }}
+                      component={Chatbox}
+                    />
+                    <ProtectedRoute
+                      path="/ihomepage/add"
+                      obj={{ key: "type", value: "matchedasadmin" }}
+                      component={Addinterns}
+                    />
+                    <ProtectedRoute
+                      path="/ihomepage/internsdetail"
+                      obj={{ key: "type", value: "matchedasadmin" }}
+                      component={Showinterns}
+                    />
+                    <ProtectedRoute
+                      exact
+                      path="/ihomepage/projectlist"
+                      obj={{ key: "type", value: "matchedasadmin" }}
+                      component={Projectlist}
+                    />
+                    <ProtectedRoute
+                      path="/ihomepage/cmprojectlist"
+                      obj={{ key: "type", value: "matchedasadmin" }}
+                      component={Completedproject}
+                    />
+                    <ProtectedRoute
+                      path="/ihomepage/astointern"
+                      obj={{ key: "type", value: "matchedasadmin" }}
+                      component={Assignproject}
+                    />
+                    <ProtectedRoute
+                      path="/ihomepage/message"
+                      obj={{ key: "type", value: "matchedasadmin" }}
+                      component={Message}
+                    />
+
+                    {/* <ProtectedRoute
                       path="/ihomepage/completedproject"
                       component={Completedproject}
                    />*/}
-                    <Route
-                      path="/ihomepage/otherlinks"
-                      component={Otherlinks}
-                    />
+
                     <Route component={Notfound} />
                   </Switch>
                 </div>
               </div>
               <div className="row">
-                <div className="col-sm">
-                  <p>Footer</p>
+                <div
+                  className="col-sm"
+                  style={{
+                    backgroundColor: "Gray",
+                    textAlign: "center",
+                    marginBottom: "0"
+                  }}
+                >
+                  <p>
+                    LICT Intern Management
+                    <br />
+                    Pulchowk Lalitpur
+                  </p>
                 </div>
               </div>
             </div>

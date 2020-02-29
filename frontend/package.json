@@ -6,10 +6,12 @@
   "homepage": "https://github.com/Sarojkatwal/SoftwareProject/blob/master/frontend/public/index.html",
   "dependencies": {
     "axios": "^0.19.1",
+    "bootstrap": "^4.4.1",
     "cors": "^2.8.5",
     "curl": "^0.1.4",
     "express": "^4.17.1",
     "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.17",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.12.0",
     "react-icons": "^3.8.0",

@@ -165,7 +165,7 @@ class Login extends Component {
               {this.state.loader ? (
                 <div>
                   <i className="fa fa-spinner fa-spin"> </i>
-                  <b>Logging in</b>
+                  <b>&nbsp;Logging in</b>
                 </div>
               ) : (
                 <b>Login</b>
@@ -174,8 +174,8 @@ class Login extends Component {
           </div>
         </div>
         <div id="myModal" className="modal fade ">
-          <div className="modal-dialog modal-login bg-danger">
-            <div className="modal-content">
+          <div className="modal-dialog modal-login">
+            <div className="modal-content" style={{ borderRadius: "10%" }}>
               <div className="modal-header">
                 <h4 className="modal-title">Sign In</h4>
                 <button

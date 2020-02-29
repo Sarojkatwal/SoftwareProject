@@ -8,7 +8,7 @@ import Addproject from "./Foradditem/addproject.js";
 class Add extends Component {
   render() {
     return (
-      <>
+      <div>
         <ul className="navbar">
           <Optionscreator
             classname=""
@@ -31,7 +31,7 @@ class Add extends Component {
           <Route exact path="/ihomepage/add/admin" component={Addadmin} />
           <Route exact path="/ihomepage/add/project" component={Addproject} />
         </Switch>
-      </>
+      </div>
     );
   }
 }

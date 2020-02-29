@@ -21,14 +21,15 @@
 }
 .col-sm-3 {
   padding-left: 0px;
+  margin-top: 10px;
 }
-.col-sm-3,
 .col-sm-9 {
-  margin-top: 5px;
+  margin-top: 10px;
+  overflow-y: scroll;
 }
 .list-group-item {
   font-size: 20px;
-  padding: 3px;
+  padding: 5px;
   padding-left: 10px;
   background-color: rgba(162, 161, 187, 0.055);
 }
@@ -112,9 +113,6 @@ ul.navbar li a:not(.active) {
   border-radius: 10px;
 }
 
-button.btn {
-  padding: 5px 20px;
-}
 @media screen and (max-width: 660px) {
   .navbar-brand,
   #logoutbutton {

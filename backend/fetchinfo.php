@@ -26,6 +26,6 @@ if($result=mysqli_query($con,$sql))
     echo json_encode($intern);
 }
 else{
-    http_response_code(404);
+    echo("Can't");
 }
 ?>

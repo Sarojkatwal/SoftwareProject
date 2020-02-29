@@ -15,8 +15,9 @@ class Message extends Component {
     this.loaddata();
   }
   loaddata() {
+    const sql = "SELECT * FROM  internsdetail WHERE Status='Active'";
     axios
-      .get("/fetchinfo.php")
+      .post("/fetchinfo.php", sql)
       .then(res => {
         if (res.data !== undefined) {
           this.setState({

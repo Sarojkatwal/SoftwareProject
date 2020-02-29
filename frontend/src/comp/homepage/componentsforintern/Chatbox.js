@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-
+import Showmessage from "../components/Formessage/showmessage.js";
 class Chatbox extends Component {
   render() {
-    return <div className="Options">Hello from Chatbox</div>;
+    const data = { Username: sessionStorage.getItem("username") };
+    return (
+      <div>
+        <Showmessage dat={data} />
+      </div>
+    );
   }
 }
 

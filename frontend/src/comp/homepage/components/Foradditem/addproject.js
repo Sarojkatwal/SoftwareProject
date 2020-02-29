@@ -51,44 +51,42 @@ class Addproject extends Component {
   };
   render() {
     return (
-      <div>
-        <form name="RegForm">
-          <div className="er">
-            <legend>Project information</legend>
-            <div className="form-group">
-              <label htmlFor="projectname">Project Name:</label>
-              <input
-                type="text"
-                id="projectname"
-                name="projectname"
-                className="form-control"
-                placeholder="Projectname"
-                required
-                value={this.state.projectname}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="projectdescription">Project Description:</label>
-              <textarea
-                rows="8"
-                className="form-control"
-                name="projectdescription"
-                placeholder="Projectdescription"
-                value={this.state.projectdescription}
-                onChange={this.handleInputChange}
-              />
-            </div>
+      <form name="RegForm">
+        <div className="er">
+          <legend>Project information</legend>
+          <div className="form-group">
+            <label htmlFor="projectname">Project Name:</label>
+            <input
+              type="text"
+              id="projectname"
+              name="projectname"
+              className="form-control"
+              placeholder="Projectname"
+              required
+              value={this.state.projectname}
+              onChange={this.handleInputChange}
+            />
           </div>
-          <br />
-          <input
-            type="submit"
-            value="Submit"
-            className="btn btn-primary"
-            onClick={this.validate}
-          />
-        </form>
-      </div>
+          <div className="form-group">
+            <label htmlFor="projectdescription">Project Description:</label>
+            <textarea
+              rows="8"
+              className="form-control"
+              name="projectdescription"
+              placeholder="Projectdescription"
+              value={this.state.projectdescription}
+              onChange={this.handleInputChange}
+            />
+          </div>
+        </div>
+        <br />
+        <input
+          type="submit"
+          value="Submit"
+          className="btn btn-primary"
+          onClick={this.validate}
+        />
+      </form>
     );
   }
 }

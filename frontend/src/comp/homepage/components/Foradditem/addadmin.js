@@ -6,7 +6,8 @@ class Addadmin extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      admin: 0
     };
   }
   handleInputChange = event => {
@@ -53,62 +54,60 @@ class Addadmin extends Component {
   };
   render() {
     return (
-      <div>
-        <form name="RegForm">
-          <div className="er">
-            <legend>Username and password</legend>
-            <div className="form-group">
-              <label htmlFor="username">Username:</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                className="form-control"
-                placeholder="Username"
-                required
-                value={this.state.username}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Password"
-                name="password"
-                required
-                value={this.state.password}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="custom-control custom-checkbox mb-3">
-              <input
-                type="checkbox"
-                id="showpassword"
-                name="showpassword"
-                className="custom-control-input"
-                onChange={event => {
-                  var x = document.getElementById("password");
-                  event.target.checked
-                    ? (x.type = "text")
-                    : (x.type = "password");
-                }}
-              />
-              <label htmlFor="showpassword" className="custom-control-label">
-                Show Password:
-              </label>
-            </div>
+      <form name="RegForm">
+        <div className="er">
+          <legend>Username and password</legend>
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="form-control"
+              placeholder="Username"
+              required
+              value={this.state.username}
+              onChange={this.handleInputChange}
+            />
           </div>
-          <br />
-          <input
-            type="submit"
-            className="btn btn-primary"
-            onClick={this.validate}
-          />
-        </form>
-      </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="Password"
+              name="password"
+              required
+              value={this.state.password}
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <div className="custom-control custom-checkbox mb-3">
+            <input
+              type="checkbox"
+              id="showpassword"
+              name="showpassword"
+              className="custom-control-input"
+              onChange={event => {
+                var x = document.getElementById("password");
+                event.target.checked
+                  ? (x.type = "text")
+                  : (x.type = "password");
+              }}
+            />
+            <label htmlFor="showpassword" className="custom-control-label">
+              Show Password:
+            </label>
+          </div>
+        </div>
+        <br />
+        <input
+          type="submit"
+          className="btn btn-primary"
+          onClick={this.validate}
+        />
+      </form>
     );
   }
 }

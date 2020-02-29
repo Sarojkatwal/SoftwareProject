@@ -5,12 +5,11 @@ $sql=$postdata;
     
 if(mysqli_query($con,"$sql"))
 {
-    echo("Sent");
+    echo("Sent to store");
 }
 else
 {
     echo("Cannot sent.Try again!!!");
-    echo($sql);
 }
 
 ?>

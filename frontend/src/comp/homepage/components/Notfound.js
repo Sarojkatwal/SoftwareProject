@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import { Route, Redirect } from "react-router-dom";
 
 class Notfound extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
-    return (
-      <div className="Options" style={{ float: "left" }}>
-        Hello from Notfound
-      </div>
-    );
+    this.props.history.goBack();
+    return "";
   }
 }
 
