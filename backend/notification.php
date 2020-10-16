@@ -8,8 +8,8 @@ if($result=mysqli_query($con,$sql))
     while($row=mysqli_fetch_assoc($result))
     {
         $message[$cr]['By']=$row['By.'];
-        $message[$cr]['Action']=$row['Action.'];
-        $message[$cr]['Date']=$row['Date.'];
+        $message[$cr]['Action']=$row['Action'];
+        $message[$cr]['Date']=$row['Date'];
         $cr++;
     }
     echo json_encode($message);

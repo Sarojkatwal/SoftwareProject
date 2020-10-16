@@ -7,15 +7,19 @@ $Username=$request->username;
 $Assigneddate=$request->assigneddate;
 $Enddate=$request->enddate;
 
-$sql="UPDATE `projectdetail` SET `Assignedto` = '{$Username}', `Assigneddate` = '{$Assigneddate}',
- `Enddate` = '{$Enddate}', `Status` = 'Assigned' WHERE `projectdetail`.`Projectname` = '{$Projectname}';";
-if(mysqli_query($con,$sql))
+foreach($Username as $Username1)
 {
-    echo("Assigned Successfully");
+    $sql="INSERT INTO `projectuser` (`Projectname`,`Username`,`Assigneddate`,`Enddate`,`UPstatus`) 
+    VALUES ('{$Projectname}','{$Username1}','{$Assigneddate}','{$Enddate}','Inprogress');";
+    if(!mysqli_query($con,$sql)){
+    http_response_code(422);
+    }
 }
-else
-{
-    echo("Can't");
+$sql1="UPDATE `projectdetail` SET `Status` = 'Assigned' WHERE `Projectname`='{$Projectname}';";
+if(mysqli_query($con,$sql1)){
+    echo('Added Successfully');
+    }
+else{
     http_response_code(422);
 }
 ?>

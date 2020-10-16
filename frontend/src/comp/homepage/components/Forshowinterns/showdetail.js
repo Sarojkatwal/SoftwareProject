@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import Showprojects from "./showprojects.js";
 import Showpersonalinfo from "./showpersonalinfo.js";
 

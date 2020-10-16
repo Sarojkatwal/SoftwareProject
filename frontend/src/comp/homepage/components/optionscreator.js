@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import { Route, NavLink, Switch } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export class Optionscreator extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <li className={`${this.props.classname ? "list-group-item" : ""}`}>

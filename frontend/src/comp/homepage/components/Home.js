@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import Bg from "../../pictures/bg.jpg";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     var canvas = document.getElementById("mycanvas");
     this.ctx = canvas.getContext("2d");

@@ -1,7 +1,7 @@
 <?php
 require 'connect.php';
 $internandproject=[];
-$sql1="SELECT Username FROM  internuser WHERE Admin=0 " ;
+$sql1="SELECT Username FROM  internsdetail WHERE Status='Active' " ;
 $sql2="SELECT Projectname FROM  projectdetail WHERE Status='Notassigned'";
 if($result1=mysqli_query($con,$sql1))
 {

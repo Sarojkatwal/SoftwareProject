@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, NavLink, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Optionscreator from "./optionscreator.js";
 import Addadmin from "./Foradditem/addadmin.js";
 import Addintern from "./Foradditem/addintern.js";

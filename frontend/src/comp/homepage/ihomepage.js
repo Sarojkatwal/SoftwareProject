@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./ihomepage.css";
-import { Route, NavLink, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Home from "./components/Home.js";
 import Chatbox from "./componentsforintern/Chatbox.js";
 import Addinterns from "./components/add.js";
@@ -18,7 +18,6 @@ import Showinterns from "./components/showinterns";
 import Message from "./components/message.js";
 import { ProtectedRoute } from "../../protected.route.js";
 import Cproject from "./componentsforintern/cproject.js";
-import IMAGE from "../pictures/i6.jpg";
 
 class Ihomepage extends Component {
   constructor() {
@@ -51,11 +50,7 @@ class Ihomepage extends Component {
           <div
             className="row"
             style={{
-              backgroundColor: "purple",
-              opacity: "1.0",
-              position: "sticky",
-              zIndex: "1",
-              top: "0"
+              backgroundColor: "purple"
             }}
           >
             <div className="col-md p-1 pl-3 ">
@@ -82,7 +77,7 @@ class Ihomepage extends Component {
               </button>
             </div>
           </div>
-          <div className="row">
+          <div>
             <button
               className="btn btn-outline-success"
               data-toggle="collapse"
@@ -166,7 +161,7 @@ class Ihomepage extends Component {
               <div
                 className="row"
                 style={{
-                  minHeight: "100%",
+                  minHeight: "90%",
                   border: "1px solid gray",
                   paddingLeft: "0px"
                 }}

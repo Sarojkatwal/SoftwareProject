@@ -8,54 +8,56 @@ class Addeditintern extends Component {
     this.state = {
       projectname: this.props.dat.Projectname,
       description: this.props.dat.Description,
-      assignedto: this.props.dat.Assignedto,
-      assigneddate: this.props.dat.Assigneddate,
-      enddate: this.props.dat.Enddate,
       status: this.props.dat.Status,
       githublink: this.props.dat.Githublink,
+      udata: this.props.dat.Udata,
+      Udata: {},
       username: "",
       timelimit: 0,
       allusers: [],
       collectusers: [],
-      redirect: false
+      redirect: false,
     };
   }
   componentDidMount() {
     this.loaddata();
+    for (var yy in this.state.udata) {
+      if (this.state.udata[yy].UPstatus === "Inprogress") {
+        this.setState({
+          Udata: this.state.udata[yy],
+        });
+      }
+      break;
+    }
   }
-  loaddata() {
+
+  loaddata = () => {
     axios
       .get("/dataforassign.php")
-      .then(res => {
-        if (
-          res.data.Username !== undefined &&
-          res.data.Projectname !== undefined
-        ) {
+      .then((res) => {
+        if (res.data.Username !== undefined) {
           this.setState({
             ...this.state,
-            allusers: res.data.Username
+            allusers: res.data.Username,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
-  }
-  handleInputChange = event => {
+  };
+  handleInputChange = (event) => {
     const target = event.target;
     let value = target.value;
     const name = target.name;
     this.setState({
       ...this.state,
-      [name]: value
+      [name]: value,
     });
-    if (
-      name === "username" &&
-      this.state.collectusers.includes(value) === false
-    ) {
+    if (name === "username") {
       this.setState({
         ...this.state,
-        collectusers: [...this.state.collectusers, value]
+        collectusers: [...this.state.collectusers, value],
       });
     }
   };
@@ -63,20 +65,25 @@ class Addeditintern extends Component {
   delete = () => {
     var x = window.confirm("Do you want to delete?");
     if (x === true) {
-      var sql =
-        "DELETE FROM Projectdetail WHERE Projectname='" +
-        this.state.projectname +
-        "'";
+      var sqls=[];
+     if(this.state.status==='Assigned')
+     {
+      const sql1 =
+      "UPDATE projectuser SET UPstatus='Project deleted by admin' WHERE Projectname='" +this.state.projectname +"' AND UPstatus='Inprogress';";
+       sqls.push(sql1);
+    }
+    const sql2="UPDATE projectdetail SET Status='Deleted' WHERE Projectname='"+this.state.projectname+"';";
+    sqls.push(sql2);
       axios
-        .post("/store.php", sql)
-        .then(res => {
-          alert(res.data);
+        .post("/store.php", {sqls:sqls})
+        .then((res) => {
+          alert("Done Successfully ", res.data);
           this.setState({
             ...this.state,
-            redirect: true
+            redirect: true,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           alert(err);
         });
     }
@@ -84,55 +91,57 @@ class Addeditintern extends Component {
 
   handleSubmit = () => {
     const date = new Date(
-      new Date(this.state.enddate).getTime() +
+      new Date(this.state.Udata.Enddate).getTime() +
         86400000 * 30 * this.state.timelimit
     ).toISOString();
-    var sql =
-      "UPDATE projectdetail SET Assignedto='" +
-      this.state.collectusers +
-      " ', Enddate=' " +
-      date +
-      "' WHERE Projectname ='" +
-      this.state.projectname +
-      "'";
-    axios
-      .post("/store.php", sql)
-      .then(res => {
-        alert(res.data);
-        this.setState({
-          ...this.state,
-          redirect: true
+    var sqls = [];
+    if (this.state.timelimit !== 0) {
+      const sql =
+        "UPDATE projectuser SET Enddate='" +
+        date +
+        "' WHERE Projectname='" +
+        this.state.projectname +
+        "' AND UPstatus='Inprogress';";
+      sqls.push(sql);
+    }
+    for (var uuser in this.state.collectusers) {
+      const sql = `INSERT INTO projectuser VALUES ('${this.state.projectname}', '${this.state.collectusers[uuser]}','${this.state.Udata.Assigneddate}', '${date}', 'Inprogress')`;
+      sqls.push(sql);
+    }
+    console.log(sqls);
+    if (sqls.length !== 0) {
+      axios
+        .post("/store.php", { sqls: sqls })
+        .then((res) => {
+          alert("Done Successfully", res.data);
+          this.setState({
+            ...this.state,
+            redirect: true,
+          });
+        })
+        .catch((err) => {
+          alert(err);
         });
-      })
-      .catch(err => {
-        alert(err);
-      });
+    }
   };
 
   validate(e, func) {
     e.preventDefault();
     var uname = document.forms["RegForm"]["username"];
-    var x = true;
-    if (this.state.collectusers.toString() === "") {
-      uname.focus();
-      x = false;
-    } else {
-      x = true;
-    }
-    if (x === true && this.state.status === "Assigned") {
-      func();
-    } else {
-      if (this.state.status !== "Assigned") {
-        alert("Project must be assigned");
-        this.setState({
-          ...this.state,
-          redirect: true
-        });
+    if (this.state.status === "Assigned") {
+      if (this.state.timelimit !== 0 || this.state.collectusers.length !== 0) {
+        func();
+      } else {
+        alert("Insert at least one field");
+        uname.focus();
       }
+    } else {
+      alert("Project must first assigned to someone to add users and deadline");
     }
   }
 
   render() {
+    //console.log(this.state.allusers);
     const re = this.state.redirect;
     if (re === true) {
       this.setState({
@@ -140,16 +149,23 @@ class Addeditintern extends Component {
         username: "",
         timelimit: 0,
         collectusers: [],
-        redirect: false
+        redirect: false,
       });
       this.loaddata();
       return <Redirect to="/ihomepage/projectlist" />;
     }
+
     const xx = this.state.allusers.map((x, i) => {
+      var currentusers = [];
+      if (this.state.Udata.Username !== undefined) {
+        currentusers = this.state.Udata.Username;
+      }
       return (
-        <option key={i} value={x}>
-          {x}
-        </option>
+        !currentusers.includes(x) && (
+          <option key={i} value={x}>
+            {x}
+          </option>
+        )
       );
     });
     const zz = this.state.collectusers.map((z, i) => {
@@ -207,7 +223,18 @@ class Addeditintern extends Component {
               type="submit"
               value="Ok"
               className="btn btn-primary"
-              onClick={e => this.validate(e, this.handleSubmit)}
+              onClick={(e) => this.validate(e, this.handleSubmit)}
+            />
+            <input
+              type="reset"
+              value="Clear"
+              className="btn btn-primary float-right"
+              onClick={() =>
+                this.setState({
+                  ...this.state,
+                  redirect: true,
+                })
+              }
             />
             <input
               type="submit"

@@ -9,10 +9,12 @@ class Projectlist extends Component {
     this.state = {
       allprojects: [],
       spproject: {},
+      filterdata: "",
+      loaded: false,
       loader1: false,
       loader2: false,
       sqls:
-        "SELECT * FROM  projectdetail WHERE Status IN('Assigned','Notassigned')"
+        "SELECT p.Projectname as Projectname,Username,Assigneddate,Enddate,UPstatus,Status,Description,Githublink FROM  projectdetail p LEFT JOIN projectuser u ON p.Projectname=u.Projectname WHERE Status NOT IN('Completed');",
     };
   }
   componentDidMount() {
@@ -26,14 +28,17 @@ class Projectlist extends Component {
     }
     axios
       .post("/fetchallprojects.php", this.xx)
-      .then(res => {
+      .then((res) => {
+        console.log("All PRojects:",res.data);
         if (res.data !== undefined) {
           this.setState({
-            allprojects: res.data
+            ...this.state,
+            allprojects: res.data,
+            loaded: true,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   }
@@ -42,83 +47,109 @@ class Projectlist extends Component {
     this.setState({
       ...this.state,
       [name]: true,
-      spproject: x
+      spproject: x,
     });
   };
   handler1 = () => {
     this.setState({
       ...this.state,
-      loader1: false
+      loader1: false,
     });
   };
   handler2 = () => {
     this.setState({
       ...this.state,
-      loader2: false
+      loader2: false,
     });
+    this.loaddata()
   };
 
   render() {
-    const xx = this.state.allprojects.map((x, i) => {
-      return (
-        <tr key={i}>
-          <td>{i + 1}</td>
-          <td>{x.Projectname}</td>
-          <td>{x.Status}</td>
-          <td>
-            <button
-              name="loader1"
-              className="btn btn-primary"
-              style={{
-                marginTop: "-10px",
-                marginRight: "30px"
-              }}
-              onClick={e => this.handleSubmit(x, "loader1")}
-            >
-              Detail
-            </button>
-          </td>
-          {sessionStorage.getItem("type") === "matchedasadmin" && (
-            <td>
-              <button
-                name="loader2"
-                className="btn btn-danger"
-                disabled={x.Status === "Completed" ? "disabled" : ""}
-                style={{
-                  marginTop: "-10px",
-                  marginRight: "30px"
-                }}
-                onClick={e => this.handleSubmit(x, "loader2")}
-              >
-                Edit
-              </button>
-            </td>
-          )}
+    const xx =
+      this.state.allprojects.length !== 0 ? (
+        this.state.allprojects.map((x, i) => {
+          let xx = x.Projectname.toLowerCase().indexOf(this.state.filterdata);
+          return (
+            xx !== -1 && (
+              <tr key={i}>
+                <td>{i + 1}</td>
+                <td>{x.Projectname}</td>
+                <td>{x.Status}</td>
+                <td>
+                  <button
+                    name="loader1"
+                    className="btn btn-primary"
+                    style={{
+                      marginTop: "-10px",
+                      marginRight: "30px",
+                    }}
+                    onClick={(e) => this.handleSubmit(x, "loader1")}
+                  >
+                    Detail
+                  </button>
+                </td>
+                {sessionStorage.getItem("type") === "matchedasadmin" && (
+                  <td>
+                    <button
+                      name="loader2"
+                      className="btn btn-danger"
+                      disabled={x.Status === "Completed" ? "disabled" : ""}
+                      style={{
+                        marginTop: "-10px",
+                        marginRight: "30px",
+                      }}
+                      onClick={(e) => this.handleSubmit(x, "loader2")}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                )}
+              </tr>
+            )
+          );
+        })
+      ) : this.state.loaded ? (
+        <tbody>No data found</tbody>
+      ) : (
+        <tr>
+          <td></td>
+          <td></td>
+          <td class="spinner-border text-success mx-auto" />
         </tr>
       );
-    });
+
     return (
       <div>
         {this.state.loader1 === false ? (
           this.state.loader2 === false ? (
             <>
               <h1 style={{ textAlign: "center" }}>All Projects</h1>
-              {this.state.allprojects && this.state.allprojects.length !== 0 && (
-                <table className="table table-hover  table-responsive-lg">
-                  <thead className="thead-dark">
-                    <tr>
-                      <th>SN</th>
-                      <th>ProjectName</th>
-                      <th>Status</th>
-                      <th>Action1</th>
-                      {sessionStorage.getItem("type") === "matchedasadmin" && (
-                        <th>Action2</th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>{xx}</tbody>
-                </table>
-              )}
+              <input
+                type="text"
+                class="form-control mb-2"
+                placeholder="Search..."
+                id="myInput"
+                onChange={(event) =>
+                  this.setState({
+                    ...this.state,
+                    filterdata: event.target.value.toLowerCase(),
+                  })
+                }
+              />
+              <table className="table table-hover  table-responsive-lg table-responsive-md">
+                <thead className="thead-dark">
+                  <tr>
+                    <th>SN</th>
+                    <th>ProjectName</th>
+                    <th>Status</th>
+                    <th>Action1</th>
+                    {sessionStorage.getItem("type") === "matchedasadmin" && (
+                      <th>Action2</th>
+                    )}
+                  </tr>
+                </thead>
+                <tbody>{xx}</tbody>
+              </table>
             </>
           ) : (
             <Addeditintern action={this.handler2} dat={this.state.spproject} />

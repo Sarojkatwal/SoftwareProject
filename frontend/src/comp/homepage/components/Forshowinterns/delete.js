@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class Delete extends Component {
-  constructor(props) {
-    super(props);
-  }
   delete = () => {
     const sql1 =
       "DELETE FROM internuser WHERE Username LIKE '" +

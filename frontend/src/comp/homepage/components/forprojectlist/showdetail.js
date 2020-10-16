@@ -6,14 +6,61 @@ class Showdetail extends Component {
     this.state = {
       projectname: this.props.dat.Projectname,
       description: this.props.dat.Description,
-      assignedto: this.props.dat.Assignedto,
-      assigneddate: this.props.dat.Assigneddate,
-      enddate: this.props.dat.Enddate,
       status: this.props.dat.Status,
-      githublink: this.props.dat.Githublink
+      githublink: this.props.dat.Githublink,
+      Udata: this.props.dat.Udata,
     };
   }
+
   render() {
+    var xx = [];
+    if (this.state.Udata !== undefined && this.state.Udata.length !== 0) {
+      xx = this.state.Udata.map((x, i) => {
+        return (
+          <>
+            <div className="card  " key={i}>
+              <div className="card-header">
+                <a
+                  className="collapsed card-link"
+                  data-toggle="collapse"
+                  href={`${"#collapse" + i}`}
+                >
+                  {`Assignment No ${i}`}
+                </a>
+              </div>
+              <div
+                id={`${"collapse" + i}`}
+                className="collapse "
+                data-parent="#accordion"
+              >
+                <div className="card-body">
+                  <table className="table table-responsive-md">
+                    <tr>
+                      <td>Assigneddate</td>
+                      <td>{x.Assigneddate}</td>
+                    </tr>
+                    <tr>
+                      <td>Enddate</td>
+                      <td>{x.Enddate}</td>
+                    </tr>
+                    <tr>
+                      <td>Assignedto</td>
+                      <td>{x.Username.toString()}</td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td>{x.UPstatus}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      });
+    } else {
+      xx = <div>No projects to show</div>;
+    }
     return (
       <>
         <h1>Detail</h1>
@@ -27,22 +74,6 @@ class Showdetail extends Component {
               <td>Description</td>
               <td>{this.state.description}</td>
             </tr>
-            {this.state.status !== "Notassigned" && (
-              <>
-                <tr>
-                  <td>Assignedto</td>
-                  <td>{this.state.assignedto}</td>
-                </tr>
-                <tr>
-                  <td>Assigneddate</td>
-                  <td>{this.state.assigneddate}</td>
-                </tr>
-                <tr>
-                  <td>Enddate</td>
-                  <td>{this.state.enddate}</td>
-                </tr>
-              </>
-            )}
             <tr>
               <td>Status</td>
               <td>{this.state.status}</td>
@@ -55,9 +86,15 @@ class Showdetail extends Component {
             )}
           </tbody>
         </table>
+        {this.state.status !== "Notassigned" && (
+          <div id="accordion">
+            <h3>Assigned to</h3>
+            {xx}
+          </div>
+        )}
         <input
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary mt-3"
           value="Goback"
           onClick={this.props.action}
         />

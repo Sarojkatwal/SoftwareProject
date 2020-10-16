@@ -22,10 +22,13 @@
 .col-sm-3 {
   padding-left: 0px;
   margin-top: 10px;
+  float: left;
+  overflow: hidden;
 }
 .col-sm-9 {
   margin-top: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  float: right;
 }
 .list-group-item {
   font-size: 20px;

@@ -4,9 +4,9 @@ class Showpersonalinfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      spintern: this.props.dat
+      spintern: this.props.dat,
     };
-    console.log(this.state.spintern);
+    //console.log(this.state.spintern);
   }
   render() {
     return (
@@ -14,6 +14,10 @@ class Showpersonalinfo extends Component {
         <h1>Interns Detail</h1>
         <table className="table table-hover  table-responsive-md">
           <tbody>
+            <tr>
+              <td>Username</td>
+              <td>{this.state.spintern.Username}</td>
+            </tr>
             <tr>
               <td>Firstname</td>
               <td>{this.state.spintern.Firstname}</td>

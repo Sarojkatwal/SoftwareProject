@@ -4,7 +4,7 @@ export class Notification extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allnotifications: []
+      allnotifications: [],
     };
   }
   componentDidMount() {
@@ -13,20 +13,23 @@ export class Notification extends Component {
   loaddata() {
     axios
       .get("/notification.php")
-      .then(res => {
+      .then((res) => {
         if (res.data !== undefined) {
+          console.log(res.data);
           this.setState({
-            allnotifications: res.data
+            allnotifications: res.data,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   }
 
   render() {
-    const xx = this.state.allnotifications.map((x, i) => {
+    const xx = "";
+    console.log("Saroj", this.state.notification);
+    /*const xx = this.state.allnotifications.map((x, i) => {
       return (
         <tr key={i}>
           <td>
@@ -34,7 +37,7 @@ export class Notification extends Component {
           </td>
         </tr>
       );
-    });
+    });*/
     return (
       <>
         <button
@@ -60,7 +63,9 @@ export class Notification extends Component {
               </div>
               <div class="modal-body">
                 <table className="table table-hover">
-                  <tbody>{xx}</tbody>
+                  <tbody>
+                    <thead>Hello</thead>
+                  </tbody>
                 </table>
               </div>
 

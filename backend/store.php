@@ -1,15 +1,12 @@
 <?php
 require 'connect.php';
 $postdata=file_get_contents("php://input");
-$sql=$postdata;
-    
-if(mysqli_query($con,"$sql"))
-{
-    echo("Sent to store");
+$request=json_decode($postdata);
+$sqls=$request->sqls;
+foreach($sqls as $sq1){
+    if(!mysqli_query($con,$sq1))
+    {
+        http_response_code(422);
+    }
 }
-else
-{
-    echo("Cannot sent.Try again!!!");
-}
-
 ?>

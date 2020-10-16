@@ -15,8 +15,8 @@ $Religion=$request->religion;
 $Gender=$request->gender;
 $Admin=0;
 //store
-$sql1="INSERT INTO `internsdetail` (`Id`, `Firstname`, `Lastname`, `Username`, `Address`, `Qualification`, `Experience`, `Nationality`, `Religion`, `Gender`)
-    VALUES (NULL, '{$Fname}', '{$Lname}', '{$Username}', '{$Address}', '{$Quali}', '{$Exper}', '{$Nationality}', '{$Religion}', '{$Gender}')";
+$sql1="INSERT INTO `internsdetail` (`Firstname`, `Lastname`, `Username`, `Address`, `Qualification`, `Experience`, `Nationality`, `Religion`, `Gender`)
+    VALUES ('{$Fname}', '{$Lname}', '{$Username}', '{$Address}', '{$Quali}', '{$Exper}', '{$Nationality}', '{$Religion}', '{$Gender}')";
     
 $sql2="INSERT INTO `internuser` (`Admin`, `Username`, `Password`) VALUES ('{$Admin}', '{$Username}', '{$Password}')";
 if(mysqli_query($con,$sql1))

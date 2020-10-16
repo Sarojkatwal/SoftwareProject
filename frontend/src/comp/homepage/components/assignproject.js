@@ -12,7 +12,7 @@ class Assignproject extends Component {
       allusers: [],
       allprojects: [],
       collectusers: [],
-      redirect: false
+      redirect: false,
     };
   }
   componentDidMount() {
@@ -21,29 +21,31 @@ class Assignproject extends Component {
   loaddata() {
     axios
       .get("/dataforassign.php")
-      .then(res => {
-        if (
-          res.data.Username !== undefined &&
-          res.data.Projectname !== undefined
-        ) {
+      .then((res) => {
+        if (res.data.Username !== undefined) {
           this.setState({
             ...this.state,
             allusers: res.data.Username,
-            allprojects: res.data.Projectname
+          });
+        }
+        if (res.data.Projectname !== undefined) {
+          this.setState({
+            ...this.state,
+            allprojects: res.data.Projectname,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   }
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const target = event.target;
     let value = target.value;
     const name = target.name;
     this.setState({
       ...this.state,
-      [name]: value
+      [name]: value,
     });
     if (
       name === "username" &&
@@ -51,33 +53,33 @@ class Assignproject extends Component {
     ) {
       this.setState({
         ...this.state,
-        collectusers: [...this.state.collectusers, value]
+        collectusers: [...this.state.collectusers, value],
       });
     }
   };
   handleSubmit = () => {
     var myobj = {
       projectname: this.state.projectname,
-      username: this.state.collectusers.toString(),
+      username: this.state.collectusers,
       assigneddate: new Date(),
       enddate: new Date(
         new Date().getTime() + 86400000 * 30 * this.state.timelimit
-      )
+      ),
     };
     axios
       .post("/assignproject.php", myobj)
-      .then(res => {
+      .then((res) => {
         alert(res.data);
         this.setState({
           ...this.state,
-          redirect: true
+          redirect: true,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };
-  validate = e => {
+  validate = (e) => {
     e.preventDefault();
     var pname = document.forms["RegForm"]["projectname"];
     var uname = document.forms["RegForm"]["username"];
@@ -105,7 +107,7 @@ class Assignproject extends Component {
         username: "",
         timelimit: 0,
         collectusers: [],
-        redirect: false
+        redirect: false,
       });
       this.loaddata();
       return <Redirect to="/ihomepage/astointern" />;
@@ -182,6 +184,17 @@ class Assignproject extends Component {
               value="AssignProject"
               className="btn btn-primary"
               onClick={this.validate}
+            />
+            <input
+              type="reset"
+              value="Clear"
+              className="btn btn-primary float-right"
+              onClick={() =>
+                this.setState({
+                  ...this.state,
+                  redirect: true,
+                })
+              }
             />
           </div>
         </form>

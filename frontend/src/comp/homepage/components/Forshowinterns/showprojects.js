@@ -4,12 +4,12 @@ class Showprojects extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projects: this.props.proj
+      projects: this.props.proj,
     };
   }
   render() {
     var xx = [];
-    if (this.state.projects !== undefined) {
+    if (this.state.projects !== undefined && this.state.projects.length !== 0) {
       xx = this.props.proj.map((x, i) => {
         return (
           <>
@@ -31,10 +31,6 @@ class Showprojects extends Component {
                 <div className="card-body">
                   <table className="table table-responsive-md">
                     <tr>
-                      <td>Assigned to</td>
-                      <td>{x.Assignedto}</td>
-                    </tr>
-                    <tr>
                       <td>Assigneddate</td>
                       <td>{x.Assigneddate}</td>
                     </tr>
@@ -43,12 +39,8 @@ class Showprojects extends Component {
                       <td>{x.Enddate}</td>
                     </tr>
                     <tr>
-                      <td>Description</td>
-                      <td>{x.Description}</td>
-                    </tr>
-                    <tr>
                       <td>Status</td>
-                      <td>{x.Status}</td>
+                      <td>{x.UPstatus}</td>
                     </tr>
                   </table>
                 </div>
@@ -57,11 +49,13 @@ class Showprojects extends Component {
           </>
         );
       });
+    } else {
+      xx = <div>No projects to show</div>;
     }
 
     return (
       <>
-        <h1>Releated Projects</h1>
+        <h1>Related Projects</h1>
         <div id="accordion">{xx}</div>
         <br />
       </>

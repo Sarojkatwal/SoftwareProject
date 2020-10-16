@@ -8,14 +8,10 @@ if($result=mysqli_query($con,$sql))
     $cr=0;
     while($row=mysqli_fetch_assoc($result))
     {
-        $intern[$cr]['Id']=$row['Id'];
+        $intern[$cr]['Username']=$row['Username'];
         $intern[$cr]['Firstname']=$row['Firstname'];
         $intern[$cr]['Lastname']=$row['Lastname'];
-        $intern[$cr]['Username']=$row['Username'];
         $intern[$cr]['Address']=$row['Address'];
-       // $intern[$cr]['ProjectName']=$row['ProjectName'];
-       // $intern[$cr]['AssignedDate']=$row['AssignedDate'];
-       // $intern[$cr]['EndDate']=$row['EndDate'];
         $intern[$cr]['Qualification']=$row['Qualification'];
         $intern[$cr]['Experience']=$row['Experience'];
         $intern[$cr]['Nationality']=$row['Nationality'];
@@ -26,6 +22,6 @@ if($result=mysqli_query($con,$sql))
     echo json_encode($intern);
 }
 else{
-    echo("Can't");
+    http_response_code(404);
 }
 ?>

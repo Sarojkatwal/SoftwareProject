@@ -10,13 +10,13 @@ if($result=mysqli_query($con,$sql))
     {
         $message[$cr]['By']=$row['By.'];
         $message[$cr]['To']=$row['To.'];
-        $message[$cr]['Message']=$row['Message.'];
-        $message[$cr]['Date']=$row['Date.'];
+        $message[$cr]['Message']=$row['Message'];
+        $message[$cr]['Date']=$row['Date'];
         $cr++;
     }
     echo json_encode($message);
 }
 else{
-    echo("Unable to do this action");
+    echo(http_response_code(422));
 }
 ?>

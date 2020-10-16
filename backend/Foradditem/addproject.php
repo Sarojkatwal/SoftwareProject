@@ -6,8 +6,8 @@ $Projectname=$request->projectname;
 $Projectdetail=$request->projectdescription;
 $Admin=1;
 //store
-$sql="INSERT INTO `projectdetail` (`Projectname`, `Description`, `Assignedto`, `Assigneddate`, `Enddate`, `Status`, `Githublink`) 
-VALUES ('{$Projectname}', '{$Projectdetail}', '', NULL, NULL, 'Notassigned', '')";
+$sql="INSERT INTO `projectdetail` (`Projectname`, `Description`, `Status`, `Githublink`) 
+VALUES ('{$Projectname}', '{$Projectdetail}', 'Notassigned', '')";
 if(mysqli_query($con,$sql))
 {
     echo("Added Successfully");
