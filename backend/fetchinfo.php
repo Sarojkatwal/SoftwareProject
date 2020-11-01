@@ -8,6 +8,7 @@ if($result=mysqli_query($con,$sql))
     $cr=0;
     while($row=mysqli_fetch_assoc($result))
     {
+        $intern[$cr]['Uid']=$row['Uid'];
         $intern[$cr]['Username']=$row['Username'];
         $intern[$cr]['Firstname']=$row['Firstname'];
         $intern[$cr]['Lastname']=$row['Lastname'];

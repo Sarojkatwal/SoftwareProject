@@ -65,17 +65,21 @@ class Addeditintern extends Component {
   delete = () => {
     var x = window.confirm("Do you want to delete?");
     if (x === true) {
-      var sqls=[];
-     if(this.state.status==='Assigned')
-     {
-      const sql1 =
-      "UPDATE projectuser SET UPstatus='Project deleted by admin' WHERE Projectname='" +this.state.projectname +"' AND UPstatus='Inprogress';";
-       sqls.push(sql1);
-    }
-    const sql2="UPDATE projectdetail SET Status='Deleted' WHERE Projectname='"+this.state.projectname+"';";
-    sqls.push(sql2);
+      var sqls = [];
+      if (this.state.status === "Assigned") {
+        const sql1 =
+          "UPDATE projectuser SET UPstatus='Project deleted by admin' WHERE Projectname='" +
+          this.state.projectname +
+          "' AND UPstatus='Inprogress';";
+        sqls.push(sql1);
+      }
+      const sql2 =
+        "UPDATE projectdetail SET Status='Deleted' WHERE Projectname='" +
+        this.state.projectname +
+        "';";
+      sqls.push(sql2);
       axios
-        .post("/store.php", {sqls:sqls})
+        .post("/store.php", { sqls: sqls })
         .then((res) => {
           alert("Done Successfully ", res.data);
           this.setState({

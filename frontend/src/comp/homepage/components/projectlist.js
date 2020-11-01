@@ -14,7 +14,9 @@ class Projectlist extends Component {
       loader1: false,
       loader2: false,
       sqls:
-        "SELECT p.Projectname as Projectname,Username,Assigneddate,Enddate,UPstatus,Status,Description,Githublink FROM  projectdetail p LEFT JOIN projectuser u ON p.Projectname=u.Projectname WHERE Status NOT IN('Completed');",
+        "SELECT p.Pid,Pstatus,Githublink,Description,Projectname,Assigneddate,Enddate,Uid,Username,"
+        +"UPstatus FROM projectdetail p LEFT JOIN (SELECT * FROM projectuser " +
+        "NATURAL JOIN internuser ) s ON p.Pid=s.Pid AND Pstatus NOT IN('Completed')",
     };
   }
   componentDidMount() {
@@ -29,7 +31,7 @@ class Projectlist extends Component {
     axios
       .post("/fetchallprojects.php", this.xx)
       .then((res) => {
-        console.log("All PRojects:",res.data);
+        console.log("All PRojects:", res.data);
         if (res.data !== undefined) {
           this.setState({
             ...this.state,
@@ -61,7 +63,7 @@ class Projectlist extends Component {
       ...this.state,
       loader2: false,
     });
-    this.loaddata()
+    this.loaddata();
   };
 
   render() {
@@ -136,7 +138,7 @@ class Projectlist extends Component {
                   })
                 }
               />
-              <table className="table table-hover  table-responsive-lg table-responsive-md">
+              <table className="table table-hover  table-responsive-md">
                 <thead className="thead-dark">
                   <tr>
                     <th>SN</th>

@@ -30,11 +30,11 @@ class Ihomepage extends Component {
       sessionStorage.setItem("username", "");
       sessionStorage.setItem("loggedin", "false");
       this.setState({
-        loader: true
+        loader: true,
       });
       setTimeout(() => {
         this.setState({
-          loader: false
+          loader: false,
         });
         this.props.history.push("/");
       }, 5000);
@@ -50,7 +50,7 @@ class Ihomepage extends Component {
           <div
             className="row"
             style={{
-              backgroundColor: "purple"
+              backgroundColor: "purple",
             }}
           >
             <div className="col-md p-1 pl-3 ">
@@ -71,7 +71,7 @@ class Ihomepage extends Component {
                 <FaUserCircle
                   style={{
                     width: "60px",
-                    height: "60px"
+                    height: "60px",
                   }}
                 />
               </button>
@@ -112,8 +112,8 @@ class Ihomepage extends Component {
                     />
                     <Optionscreator
                       classname="fa fa-folder"
-                      linkto="/ihomepage/completedproject"
-                      field="Completed  Project"
+                      linkto="/ihomepage/iproject"
+                      field="My Projects"
                     />
                     <Optionscreator
                       classname="fa fa-link"
@@ -163,13 +163,13 @@ class Ihomepage extends Component {
                 style={{
                   minHeight: "90%",
                   border: "1px solid gray",
-                  paddingLeft: "0px"
+                  paddingLeft: "0px",
                 }}
               >
                 <div
                   className="col-sm"
                   style={{
-                    margin: "15px"
+                    margin: "15px",
                   }}
                 >
                   <Switch>
@@ -185,7 +185,7 @@ class Ihomepage extends Component {
                       component={Otherlinks}
                     />
                     <ProtectedRoute
-                      path="/ihomepage/completedproject"
+                      path="/ihomepage/iproject"
                       obj={{ key: "type", value: "matchedasintern" }}
                       component={Cproject}
                     />
@@ -246,7 +246,7 @@ class Ihomepage extends Component {
                   style={{
                     backgroundColor: "Gray",
                     textAlign: "center",
-                    marginBottom: "0"
+                    marginBottom: "0",
                   }}
                 >
                   <p>

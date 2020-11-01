@@ -20,7 +20,7 @@ class Showprojects extends Component {
                   data-toggle="collapse"
                   href={`${"#collapse" + i}`}
                 >
-                  {x.Projectname}
+                  {`${i+1}. ${x.Projectname}`}
                 </a>
               </div>
               <div

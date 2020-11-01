@@ -12,19 +12,16 @@ $Quali=$request->qualification;
 $Nationality=$request->nationality;
 $Religion=$request->religion;
 $Gender=$request->gender;
-$Admin=0;
 //store
-$sql="UPDATE `internsdetail` SET  `Firstname`='$Fname', `Lastname`='$Lname', `Address`='$Address',
- `Qualification`='$Quali', `Experience`='$Exper', `Nationality`='$Nationality',
-  `Religion`='$Religion', `Gender`='$Gender'  WHERE `Uid` = '$Uid' ";
+$sql1="INSERT INTO `internsdetail` (`Uid`,`Firstname`, `Lastname`,  `Address`, `Qualification`, `Experience`, `Nationality`, `Religion`, `Gender`)
+    VALUES ('{$Uid}','{$Fname}', '{$Lname}',  '{$Address}', '{$Quali}', '{$Exper}', '{$Nationality}', '{$Religion}', '{$Gender}')";
     
-if(mysqli_query($con,$sql))
+if(mysqli_query($con,$sql1))
 {
-    echo("Successfully updated");
+    echo("Successfully added");
 }
 else
 {
-    echo("Cannot update record.Try again!!!");
+    echo(http_response_code(422));
 }
-
 ?>

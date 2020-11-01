@@ -18,7 +18,7 @@ class Login extends Component {
       matched: "notmatched",
       Height: window.innerHeight,
       Width: window.innerWidth,
-      loader: false
+      loader: false,
     };
   }
   componentDidMount() {
@@ -31,26 +31,26 @@ class Login extends Component {
     this.setState({
       ...this.state,
       Height: window.innerHeight,
-      Width: window.innerWidth
+      Width: window.innerWidth,
     });
   };
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const target = event.target;
     let value = target.value;
     const name = target.name;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     const obj = {
       UserName: this.state.username,
-      Password: this.state.password
+      Password: this.state.password,
     };
     axios
       .post("/checkuser.php", obj)
-      .then(res => {
+      .then((res) => {
         this.setState({ ...this.state, matched: res.data });
         if (
           this.state.matched === "matchedasintern" ||
@@ -63,7 +63,7 @@ class Login extends Component {
           setTimeout(() => {
             this.setState({
               ...this.state,
-              loader: false
+              loader: false,
             });
             this.props.history.push("/ihomepage");
           }, 3000);
@@ -71,7 +71,7 @@ class Login extends Component {
           alert("Insert correct username and password!!!");
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   };

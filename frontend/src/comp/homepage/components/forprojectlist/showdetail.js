@@ -4,6 +4,7 @@ class Showdetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      pid:this.props.dat.Pid,
       projectname: this.props.dat.Projectname,
       description: this.props.dat.Description,
       status: this.props.dat.Status,
@@ -14,7 +15,7 @@ class Showdetail extends Component {
 
   render() {
     var xx = [];
-    if (this.state.Udata !== undefined && this.state.Udata.length !== 0) {
+    if (this.state.Udata !== undefined && this.state.Udata.length !== 0 && this.state.status!=="Notassigned") {
       xx = this.state.Udata.map((x, i) => {
         return (
           <>
@@ -25,8 +26,17 @@ class Showdetail extends Component {
                   data-toggle="collapse"
                   href={`${"#collapse" + i}`}
                 >
-                  {`Assignment No ${i}`}
+                  {`InternNo ${i}`}
                 </a>
+                <span
+                  className={`${
+                    x.UPstatus == "active"
+                      ? "badge badge-pill badge-success float-right"
+                      : "badge badge-pill badge-secondary float-right"
+                  }`}
+                >
+                  {x.UPstatus[0]}
+                </span>
               </div>
               <div
                 id={`${"collapse" + i}`}
@@ -36,16 +46,20 @@ class Showdetail extends Component {
                 <div className="card-body">
                   <table className="table table-responsive-md">
                     <tr>
+                      <td>Uid</td>
+                      <td>{x.Uid}</td>
+                    </tr>
+                    <tr>
+                      <td>Username</td>
+                      <td>{x.Username.toString()}</td>
+                    </tr>
+                    <tr>
                       <td>Assigneddate</td>
                       <td>{x.Assigneddate}</td>
                     </tr>
                     <tr>
                       <td>Enddate</td>
                       <td>{x.Enddate}</td>
-                    </tr>
-                    <tr>
-                      <td>Assignedto</td>
-                      <td>{x.Username.toString()}</td>
                     </tr>
                     <tr>
                       <td>Status</td>
@@ -63,9 +77,13 @@ class Showdetail extends Component {
     }
     return (
       <>
-        <h1>Detail</h1>
+        <h1>Details</h1>
         <table className="table table-hover  table-responsive-lg">
           <tbody style={{ textAlign: "left" }}>
+          <tr>
+              <td>Pid</td>
+              <td>{this.state.pid}</td>
+            </tr>
             <tr>
               <td>Projectname</td>
               <td>{this.state.projectname}</td>
@@ -88,7 +106,7 @@ class Showdetail extends Component {
         </table>
         {this.state.status !== "Notassigned" && (
           <div id="accordion">
-            <h3>Assigned to</h3>
+            <h3>Interns Assigned </h3>
             {xx}
           </div>
         )}

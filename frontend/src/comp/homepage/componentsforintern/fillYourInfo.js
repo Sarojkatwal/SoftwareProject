@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Redirect } from "react-router";
 
-class Edit extends Component {
+class FillInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       uid: this.props.dat.Uid,
-      username: this.props.dat.Username,
-      fname: this.props.dat.Firstname,
-      lname: this.props.dat.Lastname,
-      address: this.props.dat.Address,
-      experience: this.props.dat.Experience,
-      qualification: this.props.dat.Qualification,
-      nationality: this.props.dat.Nationality,
-      religion: this.props.dat.Religion,
-      gender: this.props.dat.Gender,
+      fname: "",
+      lname: "",
+      address: "",
+      experience: "",
+      qualification: "",
+      nationality: "",
+      religion: "",
+      gender: "Male",
     };
   }
   handleInputChange = (event) => {
@@ -27,10 +27,20 @@ class Edit extends Component {
   };
   handleSubmit = () => {
     axios
-      .post("/edit.php", this.state)
+      .post("/addinterninfo.php", this.state)
       .then((res) => {
         window.alert(res.data);
-        this.props.action2();
+        this.setState({
+          fname: "",
+          lname: "",
+          address: "",
+          experience: "",
+          qualification: "",
+          nationality: "",
+          religion: "",
+          gender: "Male",
+        });
+        this.props.action();
       })
       .catch((err) => {
         window.alert(err);
@@ -138,12 +148,11 @@ class Edit extends Component {
                 className="custom-select"
                 required
                 onChange={this.handleInputChange}
-                value={this.state.experience}
               >
                 <option value="-----------" selected disabled>
                   Experience
                 </option>
-                <option value="<1year">1 year</option>
+                <option value="<1 year"> 1 year</option>
                 <option value="2 years">2 years</option>
                 <option value="3 years">3 years</option>
                 <option value=">3 years">>3 years</option>
@@ -156,7 +165,6 @@ class Edit extends Component {
                 className="custom-select"
                 required
                 onChange={this.handleInputChange}
-                value={this.state.qualification}
               >
                 <option value="-----------" selected disabled>
                   Qualification
@@ -254,18 +262,10 @@ class Edit extends Component {
           >
             Submit
           </button>
-          <button
-            style={{ float: "right" }}
-            type="submit"
-            className="btn btn-danger"
-            onClick={this.props.action1}
-          >
-            Cancel
-          </button>
         </form>
       </div>
     );
   }
 }
 
-export default Edit;
+export default FillInfo;

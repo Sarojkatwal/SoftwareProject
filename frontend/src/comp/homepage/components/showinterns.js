@@ -26,7 +26,9 @@ class Showinterns extends React.PureComponent {
   }
   loaddata() {
     const sql =
-      "SELECT * FROM  internsdetail WHERE Status='" + this.state.status + "'";
+      "SELECT * FROM  internsdetail i RIGHT JOIN internuser iu ON i.Uid=iu.Uid WHERE Admin=0 AND Status='" +
+      this.state.status +
+      "'";
     axios
       .post("/fetchinfo.php", sql)
       .then((res) => {
@@ -59,8 +61,8 @@ class Showinterns extends React.PureComponent {
   loadprojects = (x) => {
     const name = x;
     const sql =
-      "SELECT * FROM projectuser WHERE Username='" +
-      this.state.spintern.Username +
+      "SELECT * FROM projectuser pu NATURAL JOIN projectdetail pd WHERE Uid='" +
+      this.state.spintern.Uid +
       "'";
     axios
       .post("/projectforintern.php", sql)
@@ -91,7 +93,6 @@ class Showinterns extends React.PureComponent {
       () => {
         if (n === "loader1") {
           this.loadprojects(n);
-          console.log("Loaded projects");
         } else {
           this.setState({
             ...this.state,
@@ -133,6 +134,15 @@ class Showinterns extends React.PureComponent {
     const xx =
       this.state.allinterns.length != 0 ? (
         this.state.allinterns.map((x, i) => {
+          if (x.Firstname == null) {
+            x.Firstname = "-";
+            x.Lastname = "-";
+            x.Address = "-";
+            x.Qualification = "-";
+            x.Experience = "-";
+            x.Religion = "-";
+            x.Gender = "-";
+          }
           let xx = x.Firstname.toLowerCase().indexOf(this.state.filterdata);
           let yy = x.Lastname.toLowerCase().indexOf(this.state.filterdata);
           return (
@@ -260,7 +270,8 @@ class Showinterns extends React.PureComponent {
           ) : (
             <Edit
               {...this.props}
-              action={this.handler2}
+              action1={this.handler2}
+              action2={this.handler2}
               dat={this.state.spintern}
             />
           )

@@ -15,6 +15,10 @@ class Showpersonalinfo extends Component {
         <table className="table table-hover  table-responsive-md">
           <tbody>
             <tr>
+              <td>Uid</td>
+              <td>{this.state.spintern.Uid}</td>
+            </tr>
+            <tr>
               <td>Username</td>
               <td>{this.state.spintern.Username}</td>
             </tr>
