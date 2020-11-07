@@ -7,41 +7,33 @@ class Restore extends Component {
     this.state = { username: props.dat.Username, password: "", admin: 0 };
     console.log(props);
   }
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const target = event.target;
     let value = target.value;
     const name = target.name;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
   handleSubmit = () => {
     var x = window.confirm("Do you want to restore?");
     if (x === true) {
+      var sql =
+        "UPDATE internuser SET  Status = 'Active' WHERE Username ='" +
+        this.state.username +
+        "'";
       axios
-        .post("/Foradditem/addadmin.php", this.state)
-        .then(res => {
-          var sql =
-            "UPDATE internsdetail SET  Status = 'Active' WHERE Username ='" +
-            this.state.username +
-            "'";
-          console.log(sql);
-          axios
-            .post("/store.php", sql)
-            .then(res1 => {
-              alert(res1.data);
-              this.props.action();
-            })
-            .catch(err => {
-              alert(err);
-            });
+        .post("/store.php", { sqls: [sql] })
+        .then((res1) => {
+          alert("Restored properly");
+          this.props.action();
         })
-        .catch(err => {
+        .catch((err) => {
           alert(err);
         });
     }
   };
-  validate = e => {
+  validate = (e) => {
     e.preventDefault();
     var username = document.forms["RegForm"]["username"];
     var password = document.forms["RegForm"]["password"];
@@ -98,7 +90,7 @@ class Restore extends Component {
                 id="showpassword"
                 name="showpassword"
                 className="custom-control-input"
-                onChange={event => {
+                onChange={(event) => {
                   var x = document.getElementById("password");
                   event.target.checked
                     ? (x.type = "text")
@@ -116,7 +108,7 @@ class Restore extends Component {
           type="submit"
           value="Restore"
           className="btn btn-danger"
-          onClick={e => this.validate(e, this.handleSubmit)}
+          onClick={(e) => this.validate(e, this.handleSubmit)}
         />
         <input
           type="submit"

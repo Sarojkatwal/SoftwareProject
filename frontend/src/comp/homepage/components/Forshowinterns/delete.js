@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class Delete extends Component {
+  componentDidMount = () => {
+    this.delete();
+  };
   delete = () => {
     const sql1 =
-      "DELETE FROM internuser WHERE Username LIKE '" +
-      this.props.dat.Username +
-      "'";
+      "Update  projectuser SET UPstatus='LeftBeforeCompletion' WHERE uid='" +
+      this.props.dat.Uid +
+      "' AND UPstatus='Active'";
     const sql2 =
-      "UPDATE internsdetail SET Status = 'Notactive' WHERE Username = '" +
+      "UPDATE internuser SET Status = 'Inactive' WHERE Username = '" +
       this.props.dat.Username +
       "'";
 
@@ -16,37 +19,26 @@ class Delete extends Component {
     if (x === true) {
       const obj = {
         o1: sql1,
-        o2: sql2
+        o2: sql2,
         //o3: sql3
       };
       axios
         .post("/deleteuser.php", obj)
-        .then(res => {
+        .then((res) => {
           if (res.data !== undefined) {
             alert(res.data);
           }
           this.props.action();
         })
-        .catch(err => {
+        .catch((err) => {
           alert(err);
         });
+    } else {
+      this.props.action();
     }
   };
   render() {
-    return (
-      <div
-        style={{
-          textAlign: "center",
-          margin: "auto"
-        }}
-      >
-        <button className="btn btn-danger" onClick={this.delete}>
-          Click Here to <br />
-          remove user <br />
-          from database
-        </button>
-      </div>
-    );
+    return <></>;
   }
 }
 

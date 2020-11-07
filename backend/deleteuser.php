@@ -11,22 +11,14 @@ if(mysqli_query($con,$sql1))
     if(mysqli_query($con,$sql2))
 {
     echo("User removed successfully!!!");
-    /*if(mysqli_query($con,$sql3))
-{
-    echo("User deleted successfully!!!");
 }
 else
 {
-    echo("Cannot send.Try again!!!");
-}*/
-}
-else
-{
-    echo("Cannot send.Try again!!!");
+    echo("Cannot delete.Try again!!!");
 }
 }
 else
 {
-    echo("Cannot send.Try again!!!");
+    echo("Cannot delete.Try again!!!");
 }
 ?>

@@ -6,8 +6,8 @@ class Assignproject extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectname: "",
-      username: "",
+      pid: "",
+      uid: "",
       timelimit: 0,
       allusers: [],
       allprojects: [],
@@ -22,16 +22,17 @@ class Assignproject extends Component {
     axios
       .get("/dataforassign.php")
       .then((res) => {
-        if (res.data.Username !== undefined) {
+        //console.log("res=", res.data);
+        if (res.data.Userinfo !== undefined) {
           this.setState({
             ...this.state,
-            allusers: res.data.Username,
+            allusers: res.data.Userinfo,
           });
         }
-        if (res.data.Projectname !== undefined) {
+        if (res.data.Pid !== undefined) {
           this.setState({
             ...this.state,
-            allprojects: res.data.Projectname,
+            allprojects: res.data.Pid,
           });
         }
       })
@@ -47,10 +48,7 @@ class Assignproject extends Component {
       ...this.state,
       [name]: value,
     });
-    if (
-      name === "username" &&
-      this.state.collectusers.includes(value) === false
-    ) {
+    if (name === "uid" && this.state.collectusers.includes(value) === false) {
       this.setState({
         ...this.state,
         collectusers: [...this.state.collectusers, value],
@@ -59,13 +57,15 @@ class Assignproject extends Component {
   };
   handleSubmit = () => {
     var myobj = {
-      projectname: this.state.projectname,
-      username: this.state.collectusers,
+      pid: parseInt(this.state.pid),
+      uid: this.state.collectusers,
       assigneddate: new Date(),
       enddate: new Date(
         new Date().getTime() + 86400000 * 30 * this.state.timelimit
       ),
     };
+    //console.log(myobj.uid[1]);
+    //return;
     axios
       .post("/assignproject.php", myobj)
       .then((res) => {
@@ -81,14 +81,18 @@ class Assignproject extends Component {
   };
   validate = (e) => {
     e.preventDefault();
-    var pname = document.forms["RegForm"]["projectname"];
-    var uname = document.forms["RegForm"]["username"];
+    var pname = document.forms["RegForm"]["pid"];
+    var uname = document.forms["RegForm"]["uid"];
+    var tme = document.forms["RegForm"]["timelimit"];
     var x = true;
-    if (this.state.projectname === "") {
+    if (this.state.pid === "") {
       pname.focus();
       x = false;
     } else if (this.state.collectusers.toString() === "") {
       uname.focus();
+      x = false;
+    } else if (this.state.timelimit == 0) {
+      tme.focus();
       x = false;
     } else {
       x = true;
@@ -103,7 +107,7 @@ class Assignproject extends Component {
     if (re === true) {
       this.setState({
         ...this.state,
-        projectname: "",
+        pid: "",
         username: "",
         timelimit: 0,
         collectusers: [],
@@ -114,8 +118,8 @@ class Assignproject extends Component {
     }
     const xx = this.state.allusers.map((x, i) => {
       return (
-        <option key={i} value={x}>
-          {x}
+        <option key={i} value={x.Uid}>
+          {`${x.Username}(${x.Uid})`}
         </option>
       );
     });
@@ -128,38 +132,39 @@ class Assignproject extends Component {
     });
     const zz = this.state.collectusers.map((z, i) => {
       return (
-        <li key={i} value={z}>
+        <li key={i} value={i + 1}>
           {z}
         </li>
       );
     });
+    //console.log(this.state.collectusers);
     return (
       <div>
         <form name="RegForm">
           <div className="form-group">
-            <label htmlFor="projectname">ProjectName:</label>
+            <label htmlFor="pid">Pid:</label>
             <select
-              name="projectname"
+              name="pid"
               className="custom-select"
               required
               onChange={this.handleInputChange}
             >
               <option value="-----------" selected disabled>
-                Projectname
+                Pid
               </option>
               {yy}
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="uid">Username:</label>
             <select
-              name="username"
+              name="uid"
               className="custom-select"
               required
               onChange={this.handleInputChange}
             >
               <option value="-----------" selected disabled>
-                Username
+                Username(Uid)
               </option>
               {xx}
             </select>

@@ -5,93 +5,109 @@ class Showmessage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.dat.Username,
+      by: sessionStorage.getItem("uid"),
+      uid: this.props.dat.Uid,
       currentmessage: "",
-      allmessages: []
+      allmessages: [],
+      loaded: false,
     };
   }
   componentDidMount() {
     this.loaddata();
   }
   loaddata() {
+    const obj = {
+      by: this.state.by,
+      to: this.state.uid,
+    };
     axios
-      .post("/fetchmessage.php", this.state.username)
-      .then(res => {
+      .post("/fetchmessage.php", obj)
+      .then((res) => {
         //console.log(res.data);
         if (res.data !== undefined) {
           this.setState({
             ...this.state,
-            allmessages: res.data
+            allmessages: res.data,
+            loaded: true,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   }
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const target = event.target;
     let value = target.value;
     const name = target.name;
     this.setState({
       ...this.state,
-      [name]: value
+      [name]: value,
     });
   };
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.currentmessage === "") {
       document.getElementById("a11").focus();
       return;
     }
-    const obj = {
-      by: sessionStorage.getItem("username"),
-      to: this.state.username,
-      message: this.state.currentmessage
-    };
+    if (sessionStorage.getItem("uid") === undefined) {
+      alert("Sth went wrong");
+      return;
+    }
     const sql =
-      "INSERT INTO message (`By.`, `Message.`, `To.`) VALUES ('" +
-      obj.by +
+      "INSERT INTO message (`By.`, `Message`, `To.`) VALUES ('" +
+      this.state.by +
       "','" +
-      obj.message +
+      this.state.currentmessage +
       "','" +
-      obj.to +
+      this.state.uid +
       "')";
+    //alert(typeof sessionStorage.getItem("uid"));
     axios
-      .post("/store.php", sql)
-      .then(res => {
-        alert(res.data);
+      .post("/store.php", { sqls: [sql] })
+      .then((res) => {
+        //alert(res.data);
         this.setState({
           ...this.state,
-          currentmessage: ""
+          currentmessage: "",
         });
         this.loaddata();
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };
   render() {
+    //console.log(this.state.allmessages);
     const xx = this.state.allmessages.map((message, i) => {
       var classname;
-      if (message.By === this.state.username) {
-        classname = "homemessage";
-      } else {
-        classname = " awaymessage";
-      }
+      message.By === this.state.uid
+        ? (classname = "homemessage")
+        : (classname = "awaymessage");
+
       return (
-        <div
-          className={classname}
-          key={i}
-          style={{ marginBottom: "23px", position: "relative" }}
-        >
-          <small>{message.By + "(" + message.Date + ")"}</small>
-          <div className="a2">{message.Message}</div>
+        <div className={classname} key={i}>
+          <div className="a2">
+            {message.Message}
+            <br />
+            <small>{message.By + "(" + message.Date + ")"}</small>
+          </div>
         </div>
       );
     });
-    return (
+    return this.state.loaded ? (
       <div>
+        <button
+          class="btn btn-danger"
+          type="submit"
+          onClick={this.props.action}
+        >
+          Goback
+        </button>
+        <h5 className="float-right">{this.props.dat.Username}</h5>
+        <br />
+        <br />
         <div class="input-group mb-3">
           <input
             type="text"
@@ -111,18 +127,13 @@ class Showmessage extends Component {
               Send
             </button>
           </div>
-          <div class="input-group-append">
-            <button
-              class="btn btn-danger"
-              type="submit"
-              onClick={this.props.action}
-            >
-              Goback
-            </button>
-          </div>
           <br />
         </div>
         {xx}
+      </div>
+    ) : (
+      <div className="container">
+        <span className="spinner-border text-success mx-auto d-block" />
       </div>
     );
   }

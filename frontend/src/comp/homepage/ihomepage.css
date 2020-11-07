@@ -85,31 +85,32 @@ ul.navbar li a:not(.active) {
   padding: 10px 30px;
 }
 .homemessage {
-  min-height: 70px;
+  position: relative;
+  margin-bottom: 20px;
+  overflow: auto;
 }
+
 .awaymessage {
-  min-height: 70px;
+  position: relative;
+  margin-bottom: 20px;
+  overflow: auto;
 }
-.homemessage small {
-  width: 50%;
-  padding: 4px 1%;
-  border-radius: 10px;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
+
 .homemessage div.a2 {
   background-color: burlywood;
+  position: relative;
   color: red;
   width: 50%;
   padding: 4px 1%;
   border-radius: 10px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  float: right;
+}
+div.a2 small {
+  font-size: 9;
 }
 .awaymessage div.a2 {
   color: black;
+  position: relative;
   background-color: blueviolet;
   padding: 6px 1%;
   width: 40%;

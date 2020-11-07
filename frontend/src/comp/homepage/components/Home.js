@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-
+import axios from "axios";
+import Im from "./welcome.jpg";
 class Home extends Component {
   componentDidMount() {
+    this.loaddata();
     var canvas = document.getElementById("mycanvas");
     this.ctx = canvas.getContext("2d");
     this.rad = canvas.height / 2;
@@ -9,6 +11,26 @@ class Home extends Component {
     this.rad = this.rad * 0.9;
     setInterval(this.drawClock, 100);
   }
+
+  loaddata() {
+    const ownid = sessionStorage.getItem("username");
+    const sql =
+      "SELECT * FROM  internsdetail i RIGHT JOIN internuser iu ON i.Uid=iu.Uid WHERE Username ='" +
+      ownid +
+      "'";
+    axios
+      .post("/fetchinfo.php", sql)
+      .then((res) => {
+        if (res.data !== undefined) {
+          //console.log(res.data);
+          sessionStorage.setItem("uid", res.data[0].Uid);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
   drawClock = () => {
     this.drawFace();
     this.drawNumber();
@@ -27,14 +49,14 @@ class Home extends Component {
       0,
       this.rad * 1.05
     );
-    grd.addColorStop(0, "black");
+    grd.addColorStop(0, "green");
     grd.addColorStop(0.5, "white");
-    grd.addColorStop(1, "black");
+    grd.addColorStop(1, "white");
     this.ctx.lineWidth = this.rad * 0.1;
     this.ctx.strokeStyle = grd;
     this.ctx.stroke();
     this.ctx.beginPath();
-    this.ctx.fillStyle = "black";
+    this.ctx.fillStyle = "red";
     this.ctx.arc(0, 0, 0.1 * this.rad, 0, 2 * Math.PI);
     this.ctx.fill();
   };
@@ -84,18 +106,21 @@ class Home extends Component {
   };
   render() {
     return (
-      <canvas
-        id="mycanvas"
-        width="150"
-        height="150"
-        style={{
-          backgroundColor: "black",
-          position: "absolute",
-          top: "0",
-          right: "0",
-          padding: "0px"
-        }}
-      />
+      <div className="container">
+        <div className="d-block border border-primary float-right">
+          <canvas
+            id="mycanvas"
+            width="150"
+            height="150"
+            style={{
+              backgroundColor: "white",
+            }}
+          />
+        </div>
+        <div class="container">
+          <img src={Im} class="img-rounded" height="80%" width="100%" />
+        </div>
+      </div>
     );
   }
 }

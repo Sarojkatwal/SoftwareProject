@@ -1,8 +1,12 @@
 <?php
 require 'connect.php';
+
 $postdata=file_get_contents("php://input");
+$request=json_decode($postdata);
+$By=$request->by;
+$To=$request->to;
 $message=[];
-$sql="SELECT * FROM  `message` WHERE `By.`='$postdata' OR `To.`='$postdata' ORDER BY `Date.` DESC";
+$sql="SELECT * FROM  message WHERE (`By.`='$By'  AND `To.`='$To') OR (`To.`='$By' AND  `By.`='$To') ORDER BY `Date` DESC";
 if($result=mysqli_query($con,$sql))
 {
     $cr=0;

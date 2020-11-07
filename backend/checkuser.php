@@ -1,7 +1,7 @@
 <?php
 require 'connect.php';
 $postdata=file_get_contents("php://input");
-$sql="SELECT * FROM  internuser";
+$sql="SELECT * FROM  internuser WHERE Status='Active'";
 if($result=mysqli_query($con,$sql))
 {
     $data="notmatched";

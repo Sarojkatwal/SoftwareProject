@@ -14,8 +14,8 @@ class Projectlist extends Component {
       loader1: false,
       loader2: false,
       sqls:
-        "SELECT p.Pid,Pstatus,Githublink,Description,Projectname,Assigneddate,Enddate,Uid,Username,"
-        +"UPstatus FROM projectdetail p LEFT JOIN (SELECT * FROM projectuser " +
+        "SELECT p.Pid,Pstatus,Githublink,Description,Projectname,Assigneddate,Enddate,Uid,Username," +
+        "UPstatus FROM projectdetail p LEFT JOIN (SELECT * FROM projectuser " +
         "NATURAL JOIN internuser ) s ON p.Pid=s.Pid AND Pstatus NOT IN('Completed')",
     };
   }
@@ -31,7 +31,7 @@ class Projectlist extends Component {
     axios
       .post("/fetchallprojects.php", this.xx)
       .then((res) => {
-        console.log("All PRojects:", res.data);
+        //console.log("All PRojects:", res.data);
         if (res.data !== undefined) {
           this.setState({
             ...this.state,
@@ -70,12 +70,12 @@ class Projectlist extends Component {
     const xx =
       this.state.allprojects.length !== 0 ? (
         this.state.allprojects.map((x, i) => {
-          let xx = x.Projectname.toLowerCase().indexOf(this.state.filterdata);
+          let xx = x.Pid.toLowerCase().indexOf(this.state.filterdata);
           return (
             xx !== -1 && (
               <tr key={i}>
                 <td>{i + 1}</td>
-                <td>{x.Projectname}</td>
+                <td>{x.Pid}</td>
                 <td>{x.Status}</td>
                 <td>
                   <button
@@ -142,7 +142,7 @@ class Projectlist extends Component {
                 <thead className="thead-dark">
                   <tr>
                     <th>SN</th>
-                    <th>ProjectName</th>
+                    <th>ProjectId</th>
                     <th>Status</th>
                     <th>Action1</th>
                     {sessionStorage.getItem("type") === "matchedasadmin" && (

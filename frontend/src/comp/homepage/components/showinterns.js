@@ -134,23 +134,12 @@ class Showinterns extends React.PureComponent {
     const xx =
       this.state.allinterns.length != 0 ? (
         this.state.allinterns.map((x, i) => {
-          if (x.Firstname == null) {
-            x.Firstname = "-";
-            x.Lastname = "-";
-            x.Address = "-";
-            x.Qualification = "-";
-            x.Experience = "-";
-            x.Religion = "-";
-            x.Gender = "-";
-          }
-          let xx = x.Firstname.toLowerCase().indexOf(this.state.filterdata);
-          let yy = x.Lastname.toLowerCase().indexOf(this.state.filterdata);
+          let xx = x.Username.toLowerCase().indexOf(this.state.filterdata);
           return (
-            (xx !== -1 || yy !== -1) && (
+            xx !== -1 && (
               <tr key={i}>
                 <td>{i + 1}</td>
-                <td>{x.Firstname}</td>
-                <td>{x.Lastname}</td>
+                <td>{x.Username}</td>
                 <td>
                   <button
                     name="loader1"
@@ -200,7 +189,6 @@ class Showinterns extends React.PureComponent {
         <tr>
           <td></td>
           <td></td>
-          <td></td>
           <td class="spinner-border text-success mx-auto" />
         </tr>
       );
@@ -233,10 +221,18 @@ class Showinterns extends React.PureComponent {
                       className="custom-select"
                       onChange={this.handleInputChange}
                     >
-                      <option value="Active" selected>
+                      <option
+                        value="Active"
+                        selected={this.state.status === "Active"}
+                      >
                         Active
                       </option>
-                      <option value="Notactive">Ex</option>
+                      <option
+                        value="Inactive"
+                        selected={this.state.status === "Inactive"}
+                      >
+                        Ex
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -244,8 +240,7 @@ class Showinterns extends React.PureComponent {
                   <thead className="thead-dark">
                     <tr>
                       <th>SN</th>
-                      <th>Firstname</th>
-                      <th>Lastname</th>
+                      <th>Username</th>
                       <th>Action1</th>
                       <th>Action2</th>
                       <th>Action3</th>

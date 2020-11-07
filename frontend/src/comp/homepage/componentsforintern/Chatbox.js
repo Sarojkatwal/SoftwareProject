@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import Showmessage from "../components/Formessage/showmessage.js";
+import Message from "../components/message.js";
 class Chatbox extends Component {
   render() {
-    const data = { Username: sessionStorage.getItem("username") };
     return (
       <div>
-        <Showmessage dat={data} />
+        <Message />
       </div>
     );
   }
