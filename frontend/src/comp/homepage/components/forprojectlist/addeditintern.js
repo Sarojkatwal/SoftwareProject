@@ -6,39 +6,42 @@ class Addeditintern extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      pid: this.props.dat.Pid,
       projectname: this.props.dat.Projectname,
       description: this.props.dat.Description,
       status: this.props.dat.Status,
       githublink: this.props.dat.Githublink,
       udata: this.props.dat.Udata,
-      Udata: {},
+      Udata: [],
       username: "",
       timelimit: 0,
       allusers: [],
       collectusers: [],
-      redirect: false,
     };
   }
   componentDidMount() {
     this.loaddata();
+    var kk = [];
     for (var yy in this.state.udata) {
-      if (this.state.udata[yy].UPstatus === "Inprogress") {
-        this.setState({
-          Udata: this.state.udata[yy],
-        });
-      }
-      break;
+      var mm = this.state.udata[yy].Uid;
+      ///console.log(mm)
+      kk.push(mm);
     }
+    this.setState({
+      ...this.state,
+      Udata: kk,
+    });
   }
 
   loaddata = () => {
     axios
       .get("/dataforassign.php")
       .then((res) => {
-        if (res.data.Username !== undefined) {
+        //console.log(res.data);
+        if (res.data.Userinfo !== undefined) {
           this.setState({
             ...this.state,
-            allusers: res.data.Username,
+            allusers: res.data.Userinfo,
           });
         }
       })
@@ -62,7 +65,7 @@ class Addeditintern extends Component {
     }
   };
 
-  delete = () => {
+  /*delete = () => {
     var x = window.confirm("Do you want to delete?");
     if (x === true) {
       var sqls = [];
@@ -91,28 +94,21 @@ class Addeditintern extends Component {
           alert(err);
         });
     }
-  };
+  };*/
 
   handleSubmit = () => {
-    const date = new Date(
-      new Date(this.state.Udata.Enddate).getTime() +
-        86400000 * 30 * this.state.timelimit
+    var date = new Date(
+      new Date().getTime() + 86400000 * 30 * this.state.timelimit
     ).toISOString();
     var sqls = [];
     if (this.state.timelimit !== 0) {
-      const sql =
-        "UPDATE projectuser SET Enddate='" +
-        date +
-        "' WHERE Projectname='" +
-        this.state.projectname +
-        "' AND UPstatus='Inprogress';";
-      sqls.push(sql);
+      var dtae = new Date().toISOString();
+      for (var uuser in this.state.collectusers) {
+        const sql = `INSERT INTO projectuser VALUES ('${this.state.pid}', '${this.state.collectusers[uuser]}','${dtae}}', '${date}', 'Inprogress')`;
+        sqls.push(sql);
+      }
     }
-    for (var uuser in this.state.collectusers) {
-      const sql = `INSERT INTO projectuser VALUES ('${this.state.projectname}', '${this.state.collectusers[uuser]}','${this.state.Udata.Assigneddate}', '${date}', 'Inprogress')`;
-      sqls.push(sql);
-    }
-    console.log(sqls);
+    //console.log(sqls);
     if (sqls.length !== 0) {
       axios
         .post("/store.php", { sqls: sqls })
@@ -120,8 +116,13 @@ class Addeditintern extends Component {
           alert("Done Successfully", res.data);
           this.setState({
             ...this.state,
-            redirect: true,
+            username: "",
+            timelimit: 0,
+            collectusers: [],
           });
+          //this.loaddata();
+          //return <Redirect to="/ihomepage/projectlist" />;
+          this.props.action();
         })
         .catch((err) => {
           alert(err);
@@ -136,7 +137,7 @@ class Addeditintern extends Component {
       if (this.state.timelimit !== 0 || this.state.collectusers.length !== 0) {
         func();
       } else {
-        alert("Insert at least one field");
+        alert("Insert all  the fields");
         uname.focus();
       }
     } else {
@@ -145,45 +146,34 @@ class Addeditintern extends Component {
   }
 
   render() {
-    //console.log(this.state.allusers);
-    const re = this.state.redirect;
-    if (re === true) {
-      this.setState({
-        ...this.state,
-        username: "",
-        timelimit: 0,
-        collectusers: [],
-        redirect: false,
-      });
-      this.loaddata();
-      return <Redirect to="/ihomepage/projectlist" />;
-    }
-
     const xx = this.state.allusers.map((x, i) => {
       var currentusers = [];
-      if (this.state.Udata.Username !== undefined) {
-        currentusers = this.state.Udata.Username;
+      if (this.state.Udata !== undefined) {
+        currentusers = this.state.Udata;
       }
+      //console.log("Udata=",this.state.Udata)
+      //console.log("CurrentUSers,",currentusers)
       return (
-        !currentusers.includes(x) && (
-          <option key={i} value={x}>
-            {x}
+        !currentusers.includes(x.Uid) && (
+          <option key={i} value={x.Uid}>
+            {x.Username}({x.Uid})
           </option>
         )
       );
     });
-    const zz = this.state.collectusers.map((z, i) => {
+
+    const zz = this.state.allusers.map((x, i) => {
       return (
-        <li key={i} value={z}>
-          {z}
-        </li>
+        this.state.collectusers.includes(x.Uid) && (
+          <li key={i}>{`${x.Username}(${x.Uid})`}</li>
+        )
       );
     });
     return (
       <div>
         <h1>
           <button
-            value="DeleteProject"
+            value="Back"
             className="btn btn-light"
             onClick={this.props.action}
             style={{ float: "right" }}
@@ -239,13 +229,6 @@ class Addeditintern extends Component {
                   redirect: true,
                 })
               }
-            />
-            <input
-              type="submit"
-              value="DeleteProject"
-              className="btn btn-danger"
-              onClick={this.delete}
-              style={{ float: "right" }}
             />
           </div>
         </form>

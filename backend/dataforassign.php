@@ -18,7 +18,8 @@ if($result1=mysqli_query($con,$sql1))
     while($row2=mysqli_fetch_assoc($result2) )
     {
         
-        $internandproject['Pid'][$cr]=$row2['Pid'];
+        $internandproject['Pinfo'][$cr]["Pid"]=$row2['Pid'];
+        $internandproject['Pinfo'][$cr]["Projectname"]=$row2['Projectname'];
         $cr++;
     }
     }

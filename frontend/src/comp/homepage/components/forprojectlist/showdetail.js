@@ -4,7 +4,7 @@ class Showdetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pid:this.props.dat.Pid,
+      pid: this.props.dat.Pid,
       projectname: this.props.dat.Projectname,
       description: this.props.dat.Description,
       status: this.props.dat.Status,
@@ -15,7 +15,11 @@ class Showdetail extends Component {
 
   render() {
     var xx = [];
-    if (this.state.Udata !== undefined && this.state.Udata.length !== 0 && this.state.status!=="Notassigned") {
+    if (
+      this.state.Udata !== undefined &&
+      this.state.Udata.length !== 0 &&
+      this.state.status !== "Notassigned"
+    ) {
       xx = this.state.Udata.map((x, i) => {
         return (
           <>
@@ -26,7 +30,7 @@ class Showdetail extends Component {
                   data-toggle="collapse"
                   href={`${"#collapse" + i}`}
                 >
-                  {`InternNo ${i}`}
+                  {`InternNo ${i+1}`}
                 </a>
                 <span
                   className={`${
@@ -80,7 +84,7 @@ class Showdetail extends Component {
         <h1>Details</h1>
         <table className="table table-hover  table-responsive-lg">
           <tbody style={{ textAlign: "left" }}>
-          <tr>
+            <tr>
               <td>Pid</td>
               <td>{this.state.pid}</td>
             </tr>
@@ -88,10 +92,7 @@ class Showdetail extends Component {
               <td>Projectname</td>
               <td>{this.state.projectname}</td>
             </tr>
-            <tr>
-              <td>Description</td>
-              <td>{this.state.description}</td>
-            </tr>
+
             <tr>
               <td>Status</td>
               <td>{this.state.status}</td>
@@ -99,11 +100,34 @@ class Showdetail extends Component {
             {this.state.status === "Completed" && (
               <tr>
                 <td>Githublink</td>
-                <td>{this.state.Githublink}</td>
+                <td>
+                  <a>{this.state.Githublink}</a>
+                </td>
               </tr>
             )}
           </tbody>
         </table>
+
+        <div class="panel-group border border-left-0 border-right-0 container">
+          <div class="panel panel-default border border-left-0 border-right-0 ">
+            <div class="panel-heading">
+              <h5 class="panel-title">
+                <a
+                  data-toggle="collapse"
+                  href="#collapse11"
+                  style={{ color: "black" }}
+                >
+                  Description
+                </a>
+              </h5>
+            </div>
+            <div id="collapse11" class="panel-collapse collapse">
+              <div class="panel-body">{this.state.description}</div>
+            </div>
+          </div>
+        </div>
+        <br />
+
         {this.state.status !== "Notassigned" && (
           <div id="accordion">
             <h3>Interns Assigned </h3>

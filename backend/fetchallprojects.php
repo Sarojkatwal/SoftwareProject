@@ -32,6 +32,7 @@ if($result=mysqli_query($con,$sql))
             $Udata=[];
             $Udata["Assigneddate"]=$row['Assigneddate'];
             $Udata["Enddate"]=$row['Enddate'];
+            $Udata["Uid"]=$row['Uid'];
             $Udata["Username"]=$row['Username'];
             $Udata["UPstatus"]=$row['UPstatus'];     
             array_push($intern[$dcr]['Udata'],$Udata);

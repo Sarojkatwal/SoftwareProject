@@ -29,10 +29,10 @@ class Assignproject extends Component {
             allusers: res.data.Userinfo,
           });
         }
-        if (res.data.Pid !== undefined) {
+        if (res.data.Pinfo !== undefined) {
           this.setState({
             ...this.state,
-            allprojects: res.data.Pid,
+            allprojects: res.data.Pinfo,
           });
         }
       })
@@ -64,8 +64,7 @@ class Assignproject extends Component {
         new Date().getTime() + 86400000 * 30 * this.state.timelimit
       ),
     };
-    //console.log(myobj.uid[1]);
-    //return;
+
     axios
       .post("/assignproject.php", myobj)
       .then((res) => {
@@ -125,16 +124,16 @@ class Assignproject extends Component {
     });
     const yy = this.state.allprojects.map((y, i) => {
       return (
-        <option key={i} value={y}>
-          {y}
+        <option key={i} value={y.Pid}>
+          {`${y.Projectname.slice(0, 40)}...(${y.Pid})`}
         </option>
       );
     });
-    const zz = this.state.collectusers.map((z, i) => {
+    const zz = this.state.allusers.map((x, i) => {
       return (
-        <li key={i} value={i + 1}>
-          {z}
-        </li>
+        this.state.collectusers.includes(x.Uid) && (
+          <li key={i}>{`${x.Username}(${x.Uid})`}</li>
+        )
       );
     });
     //console.log(this.state.collectusers);
@@ -142,7 +141,7 @@ class Assignproject extends Component {
       <div>
         <form name="RegForm">
           <div className="form-group">
-            <label htmlFor="pid">Pid:</label>
+            <label htmlFor="pid">Project:</label>
             <select
               name="pid"
               className="custom-select"
@@ -150,7 +149,7 @@ class Assignproject extends Component {
               onChange={this.handleInputChange}
             >
               <option value="-----------" selected disabled>
-                Pid
+                Project Name(Pid)
               </option>
               {yy}
             </select>

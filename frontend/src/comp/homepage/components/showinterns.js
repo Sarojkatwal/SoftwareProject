@@ -138,42 +138,30 @@ class Showinterns extends React.PureComponent {
           return (
             xx !== -1 && (
               <tr key={i}>
-                <td>{i + 1}</td>
-                <td>{x.Username}</td>
-                <td>
+                <td className="align-middle">{i + 1}</td>
+                <td className="align-middle">{x.Username}</td>
+                <td className="align-middle">
                   <button
                     name="loader1"
                     className="btn btn-primary"
-                    style={{
-                      marginTop: "-10px",
-                      marginRight: "30px",
-                    }}
                     onClick={(e) => this.handleSubmit(x, "loader1")}
                   >
                     Detail
                   </button>
                 </td>
-                <td>
+                <td className="align-middle">
                   <button
                     name="loader2"
                     className="btn btn-success"
-                    style={{
-                      marginTop: "-10px",
-                      marginRight: "30px",
-                    }}
                     onClick={(e) => this.handleSubmit(x, "loader2")}
                   >
                     Edit
                   </button>
                 </td>
-                <td>
+                <td className="align-middle">
                   <button
                     name="loader3"
                     className="btn btn-danger"
-                    style={{
-                      marginTop: "-10px",
-                      marginRight: "30px",
-                    }}
                     onClick={() => this.handleSubmit(x, "loader3")}
                   >
                     {this.state.status === "Active" ? "Remove" : "Restore"}
@@ -200,7 +188,7 @@ class Showinterns extends React.PureComponent {
               <>
                 <h1>
                   Interns Detail
-                  <Notification />
+                  {/*<Notification />*/}
                 </h1>
                 <div class="input-group mb-3">
                   <input

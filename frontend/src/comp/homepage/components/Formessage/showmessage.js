@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import { FaUserCircle } from "react-icons/fa";
 class Showmessage extends Component {
   constructor(props) {
     super(props);
@@ -45,6 +45,10 @@ class Showmessage extends Component {
       [name]: value,
     });
   };
+
+  back = () => {
+    this.props.action();
+  };
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.currentmessage === "") {
@@ -83,8 +87,8 @@ class Showmessage extends Component {
     const xx = this.state.allmessages.map((message, i) => {
       var classname;
       message.By === this.state.uid
-        ? (classname = "homemessage")
-        : (classname = "awaymessage");
+        ? (classname = "awaymessage")
+        : (classname = "homemessage");
 
       return (
         <div className={classname} key={i}>
@@ -98,17 +102,24 @@ class Showmessage extends Component {
     });
     return this.state.loaded ? (
       <div>
-        <button
-          class="btn btn-danger"
-          type="submit"
-          onClick={this.props.action}
-        >
+        <button class="btn btn-danger" type="submit" onClick={this.back}>
           Goback
         </button>
-        <h5 className="float-right">{this.props.dat.Username}</h5>
-        <br />
-        <br />
-        <div class="input-group mb-3">
+        <div className="chat-container">
+          {xx}
+          <h5 className="text-center revs">{this.props.dat.Username}</h5>
+          <div className="text-center revs">
+            <FaUserCircle
+              style={{
+                width: "30%",
+                height: "30%",
+              }}
+            />
+          </div>
+          <br />
+          <br />
+        </div>
+        <div class="input-group mb-3 msgbottom">
           <input
             type="text"
             name="currentmessage"
@@ -129,7 +140,6 @@ class Showmessage extends Component {
           </div>
           <br />
         </div>
-        {xx}
       </div>
     ) : (
       <div className="container">

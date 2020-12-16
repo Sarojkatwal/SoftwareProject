@@ -88,12 +88,34 @@ ul.navbar li a:not(.active) {
   position: relative;
   margin-bottom: 20px;
   overflow: auto;
+  transform: rotate(180deg);
+  direction: ltr;
+}
+
+.chat-container {
+  height: 80%;
+  overflow: auto;
+  transform: rotate(180deg);
+  direction: rtl;
+}
+
+.msgbottom {
+  position: absolute;
+  bottom: 10;
+  padding-right: 20;
+}
+
+.revs {
+  transform: rotate(180deg);
+  direction: ltr;
 }
 
 .awaymessage {
   position: relative;
   margin-bottom: 20px;
   overflow: auto;
+  transform: rotate(180deg);
+  direction: ltr;
 }
 
 .homemessage div.a2 {

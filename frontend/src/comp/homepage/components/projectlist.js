@@ -70,39 +70,31 @@ class Projectlist extends Component {
     const xx =
       this.state.allprojects.length !== 0 ? (
         this.state.allprojects.map((x, i) => {
-          let xx = x.Pid.toLowerCase().indexOf(this.state.filterdata);
+          let xx = x.Projectname.toLowerCase().indexOf(this.state.filterdata);
           return (
             xx !== -1 && (
               <tr key={i}>
-                <td>{i + 1}</td>
-                <td>{x.Pid}</td>
-                <td>{x.Status}</td>
-                <td>
+                <td className="align-middle">{i + 1}</td>
+                <td className="align-middle">{x.Projectname}</td>
+                <td className="align-middle">{x.Status}</td>
+                <td className="align-middle">
                   <button
                     name="loader1"
                     className="btn btn-primary"
-                    style={{
-                      marginTop: "-10px",
-                      marginRight: "30px",
-                    }}
                     onClick={(e) => this.handleSubmit(x, "loader1")}
                   >
                     Detail
                   </button>
                 </td>
                 {sessionStorage.getItem("type") === "matchedasadmin" && (
-                  <td>
+                  <td className="align-middle">
                     <button
                       name="loader2"
                       className="btn btn-danger"
                       disabled={x.Status === "Completed" ? "disabled" : ""}
-                      style={{
-                        marginTop: "-10px",
-                        marginRight: "30px",
-                      }}
                       onClick={(e) => this.handleSubmit(x, "loader2")}
                     >
-                      Edit
+                      AddUser
                     </button>
                   </td>
                 )}
@@ -142,7 +134,7 @@ class Projectlist extends Component {
                 <thead className="thead-dark">
                   <tr>
                     <th>SN</th>
-                    <th>ProjectId</th>
+                    <th>Project Name</th>
                     <th>Status</th>
                     <th>Action1</th>
                     {sessionStorage.getItem("type") === "matchedasadmin" && (
